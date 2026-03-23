@@ -4,9 +4,10 @@
   else
     assign featured_collection = collections.all
   endif
+  assign products_to_show = section.settings.products_to_show
 -%}
 
-<section class="fpc">
+<section class="fpc" id="fpcSection-{{ section.id }}">
 
   {%- comment -%} Section header {%- endcomment -%}
   <div class="fpc__header">
@@ -15,67 +16,121 @@
     <p class="fpc__subtitle">{{ section.settings.subtitle }}</p>
   </div>
 
-  {%- comment -%} Product grid {%- endcomment -%}
   {%- if featured_collection != blank and featured_collection.products_count > 0 -%}
-    <ul class="fpc__grid" role="list">
-      {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
-        <li class="fpc-card">
 
-          {%- comment -%} Image {%- endcomment -%}
-          <a href="{{ product.url }}" class="fpc-card__image-link" aria-label="{{ product.title | escape }}">
-            <div class="fpc-card__image-wrap">
-              {%- if product.featured_image != blank -%}
-                {{
-                  product.featured_image
-                  | image_url: width: 800
-                  | image_tag:
-                    class: 'fpc-card__image',
-                    loading: 'lazy',
-                    widths: '400, 600, 800',
-                    alt: product.featured_image.alt | default: product.title | escape
-                }}
-              {%- else -%}
-                <div class="fpc-card__image-placeholder" aria-hidden="true"></div>
-              {%- endif -%}
-            </div>
-          </a>
+    {%- comment -%} Coverflow carousel {%- endcomment -%}
+    <div
+      class="fpc__carousel"
+      id="fpcCarousel-{{ section.id }}"
+      data-section="{{ section.id }}"
+    >
 
-          {%- comment -%} Card body {%- endcomment -%}
-          <div class="fpc-card__body">
-            <h3 class="fpc-card__title">{{ product.title }}</h3>
+      {%- comment -%} Arrow: previous {%- endcomment -%}
+      <button
+        class="fpc__arrow fpc__arrow--prev"
+        aria-label="{{ 'sections.fien_featured_prints.prev' | t }}"
+        type="button"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
 
-            <p class="fpc-card__edition">
-              {{- 'sections.fien_featured_prints.edition_label' | t -}}
-            </p>
+      {%- comment -%} 3D stage — perspective set here {%- endcomment -%}
+      <div class="fpc__stage">
+        <ul
+          class="fpc__track"
+          role="list"
+          aria-label="{{ 'sections.fien_featured_prints.carousel_label' | t }}"
+        >
+          {%- for product in featured_collection.products limit: products_to_show -%}
+            <li
+              class="fpc-card"
+              data-index="{{ forloop.index0 }}"
+              aria-roledescription="slide"
+            >
 
-            {%- comment -%} Format tags from first product option {%- endcomment -%}
-            {%- if product.options_with_values.size > 0 -%}
-              <div class="fpc-card__formats">
-                {%- for value in product.options_with_values[0].values -%}
-                  <span class="fpc-card__format-tag">{{ value }}</span>
-                {%- endfor -%}
+              {%- comment -%} Image {%- endcomment -%}
+              <a href="{{ product.url }}" class="fpc-card__image-link" aria-label="{{ product.title | escape }}">
+                <div class="fpc-card__image-wrap">
+                  {%- if product.featured_image != blank -%}
+                    {{
+                      product.featured_image
+                      | image_url: width: 800
+                      | image_tag:
+                        class: 'fpc-card__image',
+                        loading: 'lazy',
+                        widths: '400, 600, 800',
+                        alt: product.featured_image.alt | default: product.title | escape
+                    }}
+                  {%- else -%}
+                    <div class="fpc-card__image-placeholder" aria-hidden="true"></div>
+                  {%- endif -%}
+                </div>
+              </a>
+
+              {%- comment -%} Card body {%- endcomment -%}
+              <div class="fpc-card__body">
+                <h3 class="fpc-card__title">{{ product.title }}</h3>
+
+                <p class="fpc-card__edition">
+                  {{- 'sections.fien_featured_prints.edition_label' | t -}}
+                </p>
+
+                {%- if product.options_with_values.size > 0 -%}
+                  <div class="fpc-card__formats">
+                    {%- for value in product.options_with_values[0].values -%}
+                      <span class="fpc-card__format-tag">{{ value }}</span>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                <div class="fpc-card__price-row">
+                  <div class="fpc-card__price">
+                    <span class="fpc-card__price-from">
+                      {{- 'sections.fien_featured_prints.from' | t -}}
+                    </span>
+                    {{ product.price_min | money_without_trailing_zeros }}
+                  </div>
+                </div>
+
+                <a href="{{ product.url }}" class="fpc-btn">
+                  {{- 'sections.fien_featured_prints.select_options' | t -}}
+                </a>
               </div>
-            {%- endif -%}
 
-            {%- comment -%} Price row {%- endcomment -%}
-            <div class="fpc-card__price-row">
-              <div class="fpc-card__price">
-                <span class="fpc-card__price-from">
-                  {{- 'sections.fien_featured_prints.from' | t -}}
-                </span>
-                {{ product.price_min | money_without_trailing_zeros }}
-              </div>
-            </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
 
-            {%- comment -%} CTA {%- endcomment -%}
-            <a href="{{ product.url }}" class="fpc-btn">
-              {{- 'sections.fien_featured_prints.select_options' | t -}}
-            </a>
-          </div>
+      {%- comment -%} Arrow: next {%- endcomment -%}
+      <button
+        class="fpc__arrow fpc__arrow--next"
+        aria-label="{{ 'sections.fien_featured_prints.next' | t }}"
+        type="button"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
 
-        </li>
+    </div>
+
+    {%- comment -%} Dot indicators {%- endcomment -%}
+    <div class="fpc__dots" role="tablist" aria-label="{{ 'sections.fien_featured_prints.dots_label' | t }}">
+      {%- for product in featured_collection.products limit: products_to_show -%}
+        <button
+          class="fpc__dot{% if forloop.first %} fpc__dot--active{% endif %}"
+          role="tab"
+          aria-label="{{ 'sections.fien_featured_prints.go_to_slide' | t: index: forloop.index }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          data-dot="{{ forloop.index0 }}"
+          type="button"
+        ></button>
       {%- endfor -%}
-    </ul>
+    </div>
+
   {%- else -%}
     <p class="fpc__empty">{{ 'sections.fien_featured_prints.no_products' | t }}</p>
   {%- endif -%}
@@ -87,7 +142,8 @@
 
   .fpc {
     background: var(--deep);
-    padding: 120px 60px;
+    padding: 120px 0 100px;
+    overflow: hidden;
   }
 
   /* ── Section header ───────────────────────────────────────────────────── */
@@ -95,6 +151,7 @@
   .fpc__header {
     margin-bottom: 64px;
     max-width: 700px;
+    padding: 0 60px;
   }
 
   .fpc__eyebrow {
@@ -126,34 +183,70 @@
     margin: 0;
   }
 
-  /* ── Grid ─────────────────────────────────────────────────────────────── */
+  /* ── Carousel wrapper ─────────────────────────────────────────────────── */
 
-  .fpc__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+  .fpc__carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── 3D Stage ─────────────────────────────────────────────────────────── */
+
+  .fpc__stage {
+    perspective: 1200px;
+    width: 100%;
+    /* no overflow:hidden here — vertical clipping was cutting card bodies;
+       .fpc (section) carries overflow:hidden for horizontal side-card clipping */
+    position: relative;
+  }
+
+  /* ── Track — cards are absolute inside here ───────────────────────────── */
+
+  .fpc__track {
+    position: relative;
+    width: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
+    transform-style: preserve-3d;
   }
 
-  /* ── Card ─────────────────────────────────────────────────────────────── */
+  /* ── Card base — positioned from center ──────────────────────────────── */
 
   .fpc-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    /* JS fills in the full transform; this is the baseline */
+    transform: translateX(-50%);
+    width: min(420px, 75vw);
+    background: #161616;
     background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.07);
     border: 1px solid var(--border);
     overflow: hidden;
-    position: relative;
-    z-index: 0;
-    transition: border-color 0.3s ease, transform 0.3s ease;
     display: flex;
     flex-direction: column;
+    /* transition covers JS-driven transform, opacity, z-index won't animate but that's fine */
+    transition:
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity   0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.3s ease;
+    will-change: transform, opacity;
+    cursor: pointer;
   }
 
-  .fpc-card:hover {
+  /* The active card gets a gold border hint on hover */
+  .fpc-card[data-slot="0"]:hover {
     border-color: rgba(201, 168, 76, 0.3);
-    transform: translateY(-4px);
-    z-index: 1;
+  }
+
+  /* Adjacent cards: pointer-events allowed so clicks advance carousel */
+  .fpc-card[data-slot="1"],
+  .fpc-card[data-slot="-1"] {
+    cursor: pointer;
   }
 
   /* ── Card image ───────────────────────────────────────────────────────── */
@@ -161,11 +254,13 @@
   .fpc-card__image-link {
     display: block;
     overflow: hidden;
+    /* prevent link from navigating when card is not active */
   }
 
   .fpc-card__image-wrap {
     aspect-ratio: 4 / 3;
     overflow: hidden;
+    background: #1e1e1e;
     background: var(--mid);
   }
 
@@ -177,13 +272,14 @@
     transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .fpc-card:hover .fpc-card__image {
+  .fpc-card[data-slot="0"]:hover .fpc-card__image {
     transform: scale(1.03);
   }
 
   .fpc-card__image-placeholder {
     width: 100%;
     height: 100%;
+    background: #1e1e1e;
     background: var(--mid);
   }
 
@@ -194,23 +290,29 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    background: #161616;
+    background: var(--dark);
   }
 
   .fpc-card__title {
+    font-family: 'Cormorant Garamond', serif;
     font-family: var(--font-serif);
     font-size: 18px;
     font-weight: 300;
+    color: #f0ece4;
     color: var(--white);
     margin: 0 0 6px;
     line-height: 1.3;
   }
 
   .fpc-card__edition {
+    font-family: 'Montserrat', sans-serif;
     font-family: var(--font-sans);
     font-size: 9px;
     font-weight: 400;
     letter-spacing: 0.2em;
     text-transform: uppercase;
+    color: #c9a84c;
     color: var(--gold);
     margin: 0 0 16px;
   }
@@ -226,12 +328,15 @@
 
   .fpc-card__format-tag {
     padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.07);
     border: 1px solid var(--border);
+    font-family: 'Montserrat', sans-serif;
     font-family: var(--font-sans);
     font-size: 9px;
     font-weight: 400;
     letter-spacing: 0.15em;
     text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
     color: var(--muted);
   }
 
@@ -243,9 +348,11 @@
   }
 
   .fpc-card__price {
+    font-family: 'Bebas Neue', sans-serif;
     font-family: var(--font-display);
     font-size: 24px;
     letter-spacing: 0.05em;
+    color: #c9a84c;
     color: var(--gold);
     line-height: 1;
     display: flex;
@@ -254,9 +361,11 @@
   }
 
   .fpc-card__price-from {
+    font-family: 'Montserrat', sans-serif;
     font-family: var(--font-sans);
     font-size: 11px;
     font-weight: 300;
+    color: rgba(240,236,228,0.5);
     color: var(--muted);
     letter-spacing: 0.05em;
   }
@@ -267,8 +376,10 @@
     display: block;
     width: 100%;
     padding: 14px;
+    background: #c9a84c;
     background: var(--gold);
     color: #080808;
+    font-family: 'Montserrat', sans-serif;
     font-family: var(--font-sans);
     font-size: 11px;
     font-weight: 500;
@@ -281,33 +392,312 @@
   }
 
   .fpc-btn:hover {
+    background: #e8c97a;
     background: var(--gold-light);
+  }
+
+  /* ── Arrow buttons ────────────────────────────────────────────────────── */
+
+  .fpc__arrow {
+    position: relative;
+    z-index: 20;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #c9a84c;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: #c9a84c;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    /* pull arrows out of the stage overflow */
+    margin: 0 16px;
+  }
+
+  .fpc__arrow:hover {
+    background: #c9a84c;
+    background: var(--gold);
+    color: #080808;
+  }
+
+  /* ── Dot indicators ───────────────────────────────────────────────────── */
+
+  .fpc__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+    padding: 0 60px;
+  }
+
+  .fpc__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.07);
+    background: var(--border);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.3s ease, background 0.3s ease;
+  }
+
+  .fpc__dot--active {
+    width: 24px;
+    background: #c9a84c;
+    background: var(--gold);
   }
 
   /* ── Empty state ──────────────────────────────────────────────────────── */
 
   .fpc__empty {
+    font-family: 'Cormorant Garamond', serif;
     font-family: var(--font-serif);
     font-size: 18px;
     font-style: italic;
+    color: rgba(240,236,228,0.5);
     color: var(--muted);
     text-align: center;
-    padding: 60px 0;
+    padding: 60px;
   }
 
   /* ── Mobile ───────────────────────────────────────────────────────────── */
 
   @media screen and (max-width: 749px) {
     .fpc {
-      padding: 80px 24px;
+      padding: 80px 0 64px;
     }
 
-    .fpc__grid {
-      grid-template-columns: 1fr;
-      gap: 2px;
+    .fpc__header {
+      padding: 0 24px;
+      margin-bottom: 48px;
+    }
+
+    .fpc__arrow {
+      width: 40px;
+      height: 40px;
+      margin: 0 8px;
+    }
+
+    .fpc__dots {
+      padding: 0 24px;
+      margin-top: 28px;
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var TRANSITION = '0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    var AUTO_DELAY = 5000;
+
+    // Slot transforms: [translateX offset from center (px), translateZ (px), rotateY (deg), scale, opacity]
+    // Desktop
+    var SLOTS_DESKTOP = {
+       0: { tx:   0, tz:    0, ry:   0, sc: 1.00, op: 1.0 },
+       1: { tx: 340, tz: -160, ry: -45, sc: 0.85, op: 0.6 },
+      '-1': { tx:-340, tz: -160, ry:  45, sc: 0.85, op: 0.6 },
+       2: { tx: 560, tz: -280, ry: -70, sc: 0.70, op: 0.3 },
+      '-2': { tx:-560, tz: -280, ry:  70, sc: 0.70, op: 0.3 }
+    };
+    // Mobile
+    var SLOTS_MOBILE = {
+       0: { tx:   0, tz:    0, ry:   0, sc: 1.00, op: 1.0 },
+       1: { tx: 210, tz:  -80, ry: -30, sc: 0.85, op: 0.6 },
+      '-1': { tx:-210, tz:  -80, ry:  30, sc: 0.85, op: 0.6 },
+       2: { tx: 380, tz: -160, ry: -60, sc: 0.70, op: 0.3 },
+      '-2': { tx:-380, tz: -160, ry:  60, sc: 0.70, op: 0.3 }
+    };
+
+    function isMobile() {
+      return window.innerWidth <= 749;
+    }
+
+    function slots() {
+      return isMobile() ? SLOTS_MOBILE : SLOTS_DESKTOP;
+    }
+
+    function wrapIndex(i, total) {
+      return ((i % total) + total) % total;
+    }
+
+    // Shortest-path offset in a circular array
+    function slotOffset(cardIndex, activeIndex, total) {
+      var raw = cardIndex - activeIndex;
+      if (raw >  total / 2) raw -= total;
+      if (raw < -total / 2) raw += total;
+      return raw;
+    }
+
+    function init(carouselEl) {
+      var sectionId = carouselEl.dataset.section;
+      var cards     = Array.prototype.slice.call(carouselEl.querySelectorAll('.fpc-card'));
+      var dots      = Array.prototype.slice.call(
+        document.querySelectorAll('#fpcSection-' + sectionId + ' .fpc__dot')
+      );
+      var prevBtn   = carouselEl.querySelector('.fpc__arrow--prev');
+      var nextBtn   = carouselEl.querySelector('.fpc__arrow--next');
+      var stage     = carouselEl.querySelector('.fpc__stage');
+      var track     = carouselEl.querySelector('.fpc__track');
+      var total     = cards.length;
+      if (total === 0) return;
+
+      var activeIndex = 0;
+      var autoTimer   = null;
+      var paused      = false;
+
+      // ── Height — driven by the active card's natural height ───────────────
+      function updateHeight() {
+        var activeCard = cards[activeIndex];
+        if (!activeCard) return;
+        var h = activeCard.offsetHeight;
+        if (h > 0) {
+          track.style.height = h + 'px';
+          stage.style.height = h + 'px';
+        }
+      }
+
+      // ── Render ───────────────────────────────────────────────────────────
+      function render(skipTransition) {
+        var s = slots();
+        cards.forEach(function (card, i) {
+          var offset = slotOffset(i, activeIndex, total);
+          var clampedOffset = Math.max(-2, Math.min(2, offset));
+          var config = s[String(clampedOffset)] || s[String(clampedOffset > 0 ? 2 : -2)];
+
+          // Cards beyond ±2 slots: hide completely
+          var hidden = Math.abs(offset) > 2;
+
+          var transform = 'translateX(calc(-50% + ' + config.tx + 'px)) '
+            + 'translateZ(' + config.tz + 'px) '
+            + 'rotateY(' + config.ry + 'deg) '
+            + 'scale(' + config.sc + ')';
+
+          card.style.transition = skipTransition
+            ? 'none'
+            : 'transform ' + TRANSITION + ', opacity ' + TRANSITION + ', border-color 0.3s ease';
+          card.style.transform      = transform;
+          card.style.opacity        = hidden ? '0' : String(config.op);
+          card.style.zIndex         = hidden ? '0' : String(10 - Math.abs(offset));
+          card.style.pointerEvents  = hidden ? 'none' : (Math.abs(offset) <= 2 ? 'auto' : 'none');
+          card.setAttribute('data-slot', String(offset));
+          card.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+        });
+
+        // Update dots
+        dots.forEach(function (dot, i) {
+          var active = (i === activeIndex);
+          dot.classList.toggle('fpc__dot--active', active);
+          dot.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        // Set stage/track height to match active card exactly
+        updateHeight();
+      }
+
+      // ── Navigation ───────────────────────────────────────────────────────
+      function goTo(index) {
+        activeIndex = wrapIndex(index, total);
+        render(false);
+        resetTimer();
+      }
+
+      function prev() { goTo(activeIndex - 1); }
+      function next() { goTo(activeIndex + 1); }
+
+      // ── Auto-advance ─────────────────────────────────────────────────────
+      function startTimer() {
+        if (autoTimer) clearInterval(autoTimer);
+        autoTimer = setInterval(function () {
+          if (!paused) next();
+        }, AUTO_DELAY);
+      }
+
+      function resetTimer() {
+        startTimer();
+      }
+
+      function pause()  { paused = true; }
+      function resume() { paused = false; }
+
+      // ── Event binding ─────────────────────────────────────────────────────
+      if (prevBtn) prevBtn.addEventListener('click', prev);
+      if (nextBtn) nextBtn.addEventListener('click', next);
+
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); });
+      });
+
+      // Card clicks: adjacent cards advance, active card's links work normally
+      cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          var offset = parseInt(card.getAttribute('data-slot'), 10);
+          if (offset === 1)  { e.preventDefault(); next(); }
+          if (offset === -1) { e.preventDefault(); prev(); }
+          // offset 0: let the click bubble to the link naturally
+          if (Math.abs(offset) >= 2) e.preventDefault();
+        });
+      });
+
+      // Hover pause
+      carouselEl.addEventListener('mouseenter', pause);
+      carouselEl.addEventListener('mouseleave', resume);
+
+      // Touch swipe
+      var touchStartX = null;
+      stage.addEventListener('touchstart', function (e) {
+        touchStartX = e.touches[0].clientX;
+        pause();
+      }, { passive: true });
+      stage.addEventListener('touchend', function (e) {
+        if (touchStartX === null) return;
+        var delta = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) > 40) {
+          if (delta < 0) next(); else prev();
+        }
+        touchStartX = null;
+        resume();
+      }, { passive: true });
+
+      // Keyboard
+      carouselEl.setAttribute('tabindex', '0');
+      carouselEl.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+      });
+
+      // Resize: re-render with new slot config (no transition needed)
+      window.addEventListener('resize', function () {
+        render(true);
+        // force a reflow then restore transitions
+        requestAnimationFrame(function () {
+          render(false);
+        });
+      });
+
+      // ── Init ─────────────────────────────────────────────────────────────
+      render(true); // instant on first paint
+      startTimer();
+
+      // Re-measure height once images finish loading (lazy images may be
+      // taller than the initial offsetHeight measured before decode)
+      var activeImg = cards[activeIndex] && cards[activeIndex].querySelector('img');
+      if (activeImg && !activeImg.complete) {
+        activeImg.addEventListener('load', function () { updateHeight(); }, { once: true });
+      }
+    }
+
+    // Boot all carousels on the page
+    var carousels = document.querySelectorAll('.fpc__carousel');
+    carousels.forEach(function (el) { init(el); });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {

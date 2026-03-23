@@ -286,7 +286,12 @@
       "edition_label": "Limited edition of 50",
       "from": "From",
       "select_options": "Select options",
-      "no_products": "No prints available yet."
+      "no_products": "No prints available yet.",
+      "prev": "Previous print",
+      "next": "Next print",
+      "carousel_label": "Featured prints carousel",
+      "dots_label": "Go to print",
+      "go_to_slide": "Go to print {{ index }}"
     },
     "fien_hero": {
       "eyebrow": "Outdoor & wildlife photography",
