@@ -1,3 +1,81 @@
+# Fien Studio — Project Cheat Sheet
+
+## Project summary
+- **Store:** Brandon Fien — outdoor & wildlife fine art photographer
+- **Shopify store:** brandonfienlimited.myshopify.com → custom domain fienstudio.com
+- **Theme base:** Dawn (Shopify free theme, heavily customized)
+- **Products:** Limited edition fine art prints (Metallic / Canvas / Aluminum, sizes 8×10 – 30×45, $95–$1,450) + photography services
+- **Aesthetic:** Dark luxury — black backgrounds, gold accents, museum-quality feel
+- **PRD:** `website-prd.md` in project root
+
+## Shopify CLI commands
+```bash
+shopify theme dev                        # local dev server
+shopify theme push                       # push to active theme
+shopify theme push --unpublished         # push as new unpublished theme
+shopify theme pull                       # pull remote → local
+shopify theme check                      # lint Liquid files
+```
+
+## File structure (key files to know)
+```
+layout/theme.liquid          # <head>, fonts, global CSS/JS, nav, footer
+assets/critical.css          # above-fold critical styles only
+config/settings_schema.json  # global theme settings
+config/settings_data.json    # saved settings values
+locales/en.default.json      # ALL user-facing strings
+sections/hero.liquid         # full-viewport hero with video background
+sections/portfolio.liquid    # filtered image grid
+sections/featured-prints.liquid  # print cards with pricing accordion
+sections/services.liquid     # hire/services with process steps
+blocks/print-card.liquid     # individual print card
+blocks/service-card.liquid   # individual service card
+snippets/price-table.liquid  # size→price accordion table
+```
+
+## CSS tokens
+```css
+--black: #080808;        /* page background */
+--deep:  #0e0e0e;        /* alternate section bg */
+--dark:  #161616;        /* card backgrounds */
+--mid:   #1e1e1e;        /* inputs, hover states */
+--border: rgba(255,255,255,0.07);
+--gold:  #c9a84c;        /* primary accent */
+--gold-light: #e8c97a;  /* gold hover */
+--white: #f0ece4;        /* body text */
+--muted: rgba(240,236,228,0.5);
+```
+
+## Font classes / usage
+| Font | Variable | Use for |
+|---|---|---|
+| Bebas Neue | `--font-display` | H1–H3, prices, section numbers, service icons |
+| Cormorant Garamond | `--font-serif` | Body copy, quotes, taglines, product titles |
+| Montserrat | `--font-sans` | Nav, buttons, labels, tags, form fields |
+
+**Rules:** Never Bebas below 1.2rem. Montserrat all-caps for UI only. Prices always Bebas + gold.
+
+## Key behaviors
+- **Section padding:** `120px 60px` desktop → `80px 24px` mobile
+- **Cards:** `border: 1px solid var(--border)` → `rgba(201,168,76,0.3)` on hover + `translateY(-4px)`
+- **Gold underline reveal:** `scaleX(0→1)` on `::after` pseudo-element, `transform-origin: left`
+- **Custom cursor:** gold dot (6px) + ring (36px) — desktop only, disable on touch
+- **Scroll reveal:** IntersectionObserver `.reveal` → `.reveal.visible` class (`opacity + translateY`)
+- **Hero:** video bg at `opacity: 0.45`, `brightness(0.6) saturate(0.8)`, overlays fade to `--black`
+- **Pricing accordion:** expand/collapse per format, max-height transition
+
+## What NOT to build
+- No pop-ups, chat widgets, countdown timers, urgency banners
+- No sale/discount badges or strikethrough prices
+- No star ratings or review widgets on product pages
+- No "Powered by Shopify" footer
+- No breadcrumbs
+
+## Translation rule
+Every user-facing string uses `{{ 'key' | t }}` — update `locales/en.default.json` for every new key. Sentence case in all locale values.
+
+---
+
 # AGENTS.md
 
 🚨 MANDATORY: YOU MUST CALL "learn_shopify_api" ONCE WHEN WORKING WITH LIQUID THEMES.
