@@ -9,6 +9,14 @@
  */
 {
   "sections": {
+    "fien_hero": {
+      "type": "fien-hero",
+      "settings": {}
+    },
+    "fien_featured_prints": {
+      "type": "fien-featured-prints",
+      "settings": {}
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -78,6 +86,8 @@
     }
   },
   "order": [
+    "fien_hero",
+    "fien_featured_prints",
     "image_banner",
     "featured_collection"
   ]

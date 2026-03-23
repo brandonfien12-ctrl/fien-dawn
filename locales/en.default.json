@@ -276,6 +276,46 @@
     }
   },
   "sections": {
+    "fien_nav": {
+      "aria_label": "Main navigation",
+      "mobile_menu_label": "Mobile navigation",
+      "menu_open": "Open menu",
+      "menu_close": "Close menu"
+    },
+    "fien_featured_prints": {
+      "edition_label": "Limited edition of 50",
+      "from": "From",
+      "select_options": "Select options",
+      "no_products": "No prints available yet."
+    },
+    "fien_hero": {
+      "eyebrow": "Outdoor & wildlife photography",
+      "heading_line_1": "Brandon Fien",
+      "heading_line_2": "Studio",
+      "subtitle": "Limited-edition fine art prints from the wilderness. Each image a single moment, made permanent.",
+      "scroll_label": "Scroll",
+      "video_placeholder": "Hero video"
+    },
+    "fien_footer": {
+      "rights": "All rights reserved.",
+      "social_label": "Social media links",
+      "instagram": "Instagram",
+      "youtube": "YouTube"
+    },
+    "fien_product": {
+      "edition_eyebrow": "Limited edition fine art print",
+      "untold_story_heading": "The untold story",
+      "details_heading": "Print details",
+      "details_placeholder": "Archival pigment print on premium fine art paper. Produced in a limited edition of 50.",
+      "shipping_heading": "Shipping",
+      "shipping_content": "Prints are produced to order and ship within 7–10 business days. Each print is carefully packaged flat or rolled in a protective tube. Free shipping on orders over $500.",
+      "certificate_heading": "Certificate of authenticity",
+      "certificate_content": "Every print is accompanied by a signed certificate of authenticity, printed on archival paper and numbered within the edition.",
+      "related_eyebrow": "From the same collection",
+      "related_heading": "You may also like",
+      "gallery_label": "Product image gallery",
+      "view_image": "View image {{ index }}"
+    },
     "announcements": {
       "previous_announcement": "Previous announcement",
       "next_announcement": "Next announcement",
