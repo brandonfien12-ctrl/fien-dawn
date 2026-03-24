@@ -2,6 +2,12 @@
 
   {%- comment -%} ── Page header ──────────────────────────────────────────── {%- endcomment -%}
   <div class="fcol__header">
+    <a href="{{ routes.root_url }}" class="fcol__back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {{- 'sections.fien_collection.back_home' | t -}}
+    </a>
     <p class="fcol__eyebrow">{{- 'sections.fien_collection.eyebrow' | t -}}</p>
     <h1 class="fcol__title">{{ collection.title }}</h1>
     {%- if collection.description != blank -%}
@@ -173,6 +179,37 @@
     background: #0e0e0e;
     background: var(--deep);
     padding: 80px 60px 60px;
+  }
+
+  .fcol__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 28px;
+    transition: color 0.2s ease;
+  }
+
+  .fcol__back:hover {
+    color: #c9a84c;
+    color: var(--gold);
+  }
+
+  .fcol__back svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .fcol__back:hover svg {
+    transform: translateX(-3px);
   }
 
   .fcol__eyebrow {

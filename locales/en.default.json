@@ -292,7 +292,8 @@
       "empty": "No prints found. Try a different filter.",
       "edition_label": "Limited edition of 50",
       "from": "From",
-      "select_options": "Select options"
+      "select_options": "Select options",
+      "back_home": "Home"
     },
     "fien_featured_prints": {
       "edition_label": "Limited edition of 50",

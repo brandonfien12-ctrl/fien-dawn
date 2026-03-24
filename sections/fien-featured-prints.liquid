@@ -7,7 +7,7 @@
   assign products_to_show = section.settings.products_to_show
 -%}
 
-<section class="fpc" id="fpcSection-{{ section.id }}">
+<section class="fpc" id="fien-collection">
 
   {%- comment -%} Section header {%- endcomment -%}
   <div class="fpc__header">
@@ -142,8 +142,8 @@
 
   .fpc {
     background: var(--deep);
-    padding: 120px 0 100px;
-    overflow: hidden;
+    padding: 120px 0 120px;
+    overflow-x: clip;
   }
 
   /* ── Section header ───────────────────────────────────────────────────── */
