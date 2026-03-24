@@ -11,15 +11,37 @@
   "sections": {
     "fien_hero": {
       "type": "fien-hero",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Outdoor & wildlife photography",
+        "heading_line_1": "The untold",
+        "heading_line_2": "Stories.",
+        "subtitle": "Limited-edition fine art prints from the wilderness. Each image a single moment, made permanent.",
+        "cta_primary_label": "View prints",
+        "cta_primary_url": "",
+        "video": "shopify://files/videos/MontageLoop.mp4"
+      }
     },
     "fien_anniversary_banner": {
       "type": "fien-anniversary-banner",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Celebrating 10 years",
+        "numeral": "X",
+        "heading_line_1": "Anniversary",
+        "heading_line_2": "Collection",
+        "subtitle": "All 10 prints available",
+        "cta_label": "",
+        "cta_url": ""
+      }
     },
     "fien_featured_prints": {
       "type": "fien-featured-prints",
-      "settings": {}
+      "settings": {
+        "eyebrow": "The collection",
+        "heading": "Fine art prints",
+        "subtitle": "Each image is produced in a limited edition of 50. Printed to order.",
+        "collection": "",
+        "products_to_show": 10
+      }
     }
   },
   "order": [
