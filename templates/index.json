@@ -13,6 +13,10 @@
       "type": "fien-hero",
       "settings": {}
     },
+    "fien_anniversary_banner": {
+      "type": "fien-anniversary-banner",
+      "settings": {}
+    },
     "fien_featured_prints": {
       "type": "fien-featured-prints",
       "settings": {}
@@ -87,6 +91,7 @@
   },
   "order": [
     "fien_hero",
+    "fien_anniversary_banner",
     "fien_featured_prints",
     "image_banner",
     "featured_collection"

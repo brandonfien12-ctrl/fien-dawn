@@ -43,14 +43,6 @@
         </a>
       {%- endif -%}
 
-      {%- if section.settings.cta_secondary_label != blank -%}
-        <a
-          href="{{ section.settings.cta_secondary_url | default: '/pages/services' }}"
-          class="fien-btn fien-btn--outline"
-        >
-          {{- section.settings.cta_secondary_label -}}
-        </a>
-      {%- endif -%}
     </div>
   </div>
 
@@ -189,17 +181,6 @@
     transform: translateY(-2px);
   }
 
-  .fien-btn--outline {
-    background: transparent;
-    color: var(--white);
-    border: 1px solid rgba(201, 168, 76, 0.4);
-  }
-
-  .fien-btn--outline:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-
   /* Scroll indicator */
   .fien-hero__scroll {
     position: absolute;
@@ -282,13 +263,13 @@
       "type": "text",
       "id": "heading_line_1",
       "label": "Heading line 1",
-      "default": "Brandon Fien"
+      "default": "The untold"
     },
     {
       "type": "text",
       "id": "heading_line_2",
       "label": "Heading line 2 (gold)",
-      "default": "Studio"
+      "default": "Stories."
     },
     {
       "type": "textarea",
@@ -306,17 +287,6 @@
       "type": "url",
       "id": "cta_primary_url",
       "label": "Primary button URL"
-    },
-    {
-      "type": "text",
-      "id": "cta_secondary_label",
-      "label": "Secondary button label",
-      "default": "Photography services"
-    },
-    {
-      "type": "url",
-      "id": "cta_secondary_url",
-      "label": "Secondary button URL"
     },
     {
       "type": "video",

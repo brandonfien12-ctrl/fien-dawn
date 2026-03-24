@@ -282,6 +282,18 @@
       "menu_open": "Open menu",
       "menu_close": "Close menu"
     },
+    "fien_collection": {
+      "eyebrow": "The collection",
+      "subtitle": "Each image is produced in a limited edition of 50. Printed to order.",
+      "filter_all": "All",
+      "filter_label": "Filter by category",
+      "sort_label": "Sort",
+      "load_more": "Load more",
+      "empty": "No prints found. Try a different filter.",
+      "edition_label": "Limited edition of 50",
+      "from": "From",
+      "select_options": "Select options"
+    },
     "fien_featured_prints": {
       "edition_label": "Limited edition of 50",
       "from": "From",
