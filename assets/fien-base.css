@@ -4,6 +4,14 @@
    never affect touch / mobile devices.
    ─────────────────────────────────────────────────────────────────────────── */
 
+/* ── Global background — override Dawn's light color scheme ──────────────── */
+
+main,
+.content-for-layout {
+  background: #080808 !important;
+  background: var(--black) !important;
+}
+
 /* ── Custom cursor ────────────────────────────────────────────────────────── */
 
 @media (hover: hover) and (pointer: fine) {

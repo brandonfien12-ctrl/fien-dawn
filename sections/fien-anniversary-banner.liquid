@@ -17,8 +17,6 @@
           <span class="fab__line">{{- section.settings.heading_line_2 -}}</span>
         </h2>
 
-        <p class="fab__subtitle">{{- section.settings.subtitle -}}</p>
-
         {%- if section.settings.cta_label != blank -%}
           <a
             href="{{ section.settings.cta_url | default: '/collections/all' }}"

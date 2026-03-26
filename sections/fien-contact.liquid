@@ -1,0 +1,383 @@
+<section class="fcf">
+  <div class="fcf__grid">
+
+    {%- comment -%} ── Left column ────────────────────────────────────────── {%- endcomment -%}
+    <div class="fcf__info">
+
+      <p class="fcf__eyebrow">{{ 'sections.fien_contact.eyebrow' | t }}</p>
+
+      <h1 class="fcf__heading">{{ 'sections.fien_contact.heading' | t }}</h1>
+
+      <p class="fcf__body">{{ 'sections.fien_contact.body' | t }}</p>
+
+      <a href="mailto:{{ section.settings.email }}" class="fcf__email">
+        {{- section.settings.email -}}
+      </a>
+
+      <img
+        src="{{ section.settings.signature_image | default: 'https://cdn.shopify.com/s/files/1/0770/2318/3045/files/signature-gold.png?v=1774552557' }}"
+        alt="{{ 'sections.fien_contact.signature_alt' | t }}"
+        class="fcf__signature"
+        loading="lazy"
+      >
+
+    </div>
+
+    {%- comment -%} ── Right column — contact form ─────────────────────────── {%- endcomment -%}
+    <div class="fcf__form-wrap">
+
+      {%- form 'contact' -%}
+
+        {%- if form.posted_successfully? -%}
+          <p class="fcf__success">
+            {{- 'sections.fien_contact.success' | t -}}
+          </p>
+        {%- else -%}
+
+          {%- if form.errors -%}
+            <p class="fcf__error">
+              {{- 'sections.fien_contact.error' | t -}}
+            </p>
+          {%- endif -%}
+
+          <div class="fcf__row">
+            <div class="fcf__group">
+              <label class="fcf__label" for="ContactName">
+                {{- 'sections.fien_contact.label_name' | t -}}
+              </label>
+              <input
+                id="ContactName"
+                class="fcf__input"
+                type="text"
+                name="contact[name]"
+                value="{{ form.name }}"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <div class="fcf__group">
+              <label class="fcf__label" for="ContactEmail">
+                {{- 'sections.fien_contact.label_email' | t -}}
+              </label>
+              <input
+                id="ContactEmail"
+                class="fcf__input"
+                type="email"
+                name="contact[email]"
+                value="{{ form.email }}"
+                autocomplete="email"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="fcf__group">
+            <label class="fcf__label" for="ContactSubject">
+              {{- 'sections.fien_contact.label_subject' | t -}}
+            </label>
+            <div class="fcf__select-wrap">
+              <select id="ContactSubject" class="fcf__select" name="contact[subject]">
+                <option value="{{ 'sections.fien_contact.subject_print' | t }}">
+                  {{- 'sections.fien_contact.subject_print' | t -}}
+                </option>
+                <option value="{{ 'sections.fien_contact.subject_commission' | t }}">
+                  {{- 'sections.fien_contact.subject_commission' | t -}}
+                </option>
+                <option value="{{ 'sections.fien_contact.subject_general' | t }}">
+                  {{- 'sections.fien_contact.subject_general' | t -}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fcf__group">
+            <label class="fcf__label" for="ContactMessage">
+              {{- 'sections.fien_contact.label_message' | t -}}
+            </label>
+            <textarea
+              id="ContactMessage"
+              class="fcf__textarea"
+              name="contact[body]"
+              rows="6"
+              required
+            >{{- form.body -}}</textarea>
+          </div>
+
+          <button type="submit" class="fcf__submit">
+            {{- 'sections.fien_contact.submit' | t -}}
+          </button>
+
+        {%- endif -%}
+
+      {%- endform -%}
+
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ── Contact page ─────────────────────────────────────────────────────── */
+
+  .fcf {
+    background: var(--black);
+    padding: 120px 60px;
+  }
+
+  /* ── Two-column grid ──────────────────────────────────────────────────── */
+
+  .fcf__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── Left column ──────────────────────────────────────────────────────── */
+
+  .fcf__eyebrow {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 20px;
+  }
+
+  .fcf__heading {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 7vw, 88px);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin: 0 0 32px;
+  }
+
+  .fcf__body {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    margin: 0 0 36px;
+    max-width: 420px;
+  }
+
+  .fcf__email {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-bottom: 40px;
+  }
+
+  .fcf__email:hover {
+    color: var(--gold-light);
+  }
+
+  .fcf__signature {
+    display: block;
+    width: 180px;
+    opacity: 0.85;
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
+
+  /* ── Right column — form ──────────────────────────────────────────────── */
+
+  .fcf__form-wrap {
+    padding-top: 8px;
+  }
+
+  .fcf__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .fcf__group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .fcf__row .fcf__group {
+    margin-bottom: 0;
+  }
+
+  .fcf__label {
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .fcf__input,
+  .fcf__select,
+  .fcf__textarea {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 14px 16px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  .fcf__input:focus,
+  .fcf__select:focus,
+  .fcf__textarea:focus {
+    border-color: rgba(201, 168, 76, 0.5);
+  }
+
+  .fcf__input::placeholder,
+  .fcf__textarea::placeholder {
+    color: rgba(240, 236, 228, 0.2);
+  }
+
+  /* Select with gold chevron */
+  .fcf__select-wrap {
+    position: relative;
+  }
+
+  .fcf__select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--gold);
+    pointer-events: none;
+  }
+
+  .fcf__select {
+    cursor: pointer;
+  }
+
+  .fcf__select option {
+    background: var(--dark);
+    color: var(--white);
+  }
+
+  .fcf__textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.6;
+  }
+
+  /* Submit */
+  .fcf__submit {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: #080808;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 8px;
+  }
+
+  .fcf__submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  /* Success message */
+  .fcf__success {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1.7;
+    padding: 40px 0;
+  }
+
+  /* Error message */
+  .fcf__error {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #c0392b;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border: 1px solid rgba(192, 57, 43, 0.3);
+  }
+
+  /* ── Mobile ───────────────────────────────────────────────────────────── */
+
+  @media screen and (max-width: 749px) {
+    .fcf {
+      padding: 80px 24px;
+    }
+
+    .fcf__grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .fcf__row {
+      grid-template-columns: 1fr;
+    }
+
+    .fcf__signature {
+      width: 140px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Fien contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email address",
+      "default": "brandonfien12@gmail.com"
+    },
+    {
+      "type": "text",
+      "id": "signature_image",
+      "label": "Signature image URL",
+      "info": "Leave blank to use the default signature"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fien contact"
+    }
+  ]
+}
+{% endschema %}
