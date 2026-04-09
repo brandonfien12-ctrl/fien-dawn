@@ -1,0 +1,726 @@
+{%- paginate collection.products by section.settings.products_per_page -%}
+
+<div class="fcol">
+
+  {%- comment -%} ── Page header ──────────────────────────────────────────── {%- endcomment -%}
+  <div class="fcol__header">
+    <p class="fcol__eyebrow">{{- 'sections.fien_collection.eyebrow' | t -}}</p>
+    <h1 class="fcol__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="fcol__subtitle">{{ collection.description }}</p>
+    {%- else -%}
+      <p class="fcol__subtitle">{{- 'sections.fien_collection.subtitle' | t -}}</p>
+    {%- endif -%}
+    <div class="fcol__divider" aria-hidden="true"></div>
+  </div>
+
+  {%- comment -%} ── Sticky filter + sort bar ──────────────────────────────── {%- endcomment -%}
+  {%- assign fien_tags = 'Wildlife,Landscape,Aerial,Black & White' | split: ',' -%}
+  {%- assign sort_by   = collection.sort_by | default: collection.default_sort_by -%}
+
+  <div class="fcol__bar" id="fcolBar">
+    <div class="fcol__bar-inner">
+
+      {%- comment -%} Filter tag buttons {%- endcomment -%}
+      <nav class="fcol__filters" aria-label="{{ 'sections.fien_collection.filter_label' | t }}">
+        <a
+          href="{{ collection.url }}"
+          class="fcol__filter-btn{% unless current_tags.size > 0 %} fcol__filter-btn--active{% endunless %}"
+        >
+          {{- 'sections.fien_collection.filter_all' | t -}}
+        </a>
+        {%- for tag in fien_tags -%}
+          {%- assign tag_handle = tag | handleize -%}
+          <a
+            href="{{ routes.collections_url }}/{{ collection.handle }}/{{ tag_handle }}"
+            class="fcol__filter-btn{% if current_tags contains tag %} fcol__filter-btn--active{% endif %}"
+          >
+            {{- tag -}}
+          </a>
+        {%- endfor -%}
+      </nav>
+
+      {%- comment -%} Sort dropdown {%- endcomment -%}
+      <div class="fcol__sort">
+        <label class="fcol__sort-label" for="FcolSort-{{ section.id }}">
+          {{- 'sections.fien_collection.sort_label' | t -}}
+        </label>
+        <div class="fcol__sort-wrap">
+          <select
+            class="fcol__sort-select"
+            id="FcolSort-{{ section.id }}"
+            aria-label="{{ 'sections.fien_collection.sort_label' | t }}"
+          >
+            {%- for option in collection.sort_options -%}
+              {%- if option.value == 'price-ascending'
+                   or option.value == 'price-descending'
+                   or option.value == 'created-descending' -%}
+                <option
+                  value="{{ collection.url }}?sort_by={{ option.value }}"
+                  {% if option.value == sort_by %}selected="selected"{% endif %}
+                >
+                  {{- option.name -}}
+                </option>
+              {%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {%- comment -%} ── Product grid ─────────────────────────────────────────── {%- endcomment -%}
+  <div class="fcol__grid-wrap">
+
+    {%- if collection.products_count > 0 -%}
+
+      <ul class="fcol__grid" role="list">
+        {%- for product in collection.products -%}
+
+          <li class="fcol-card">
+
+            {%- comment -%} Image {%- endcomment -%}
+            <a
+              href="{{ product.url }}"
+              class="fcol-card__img-link"
+              aria-label="{{ product.title | escape }}"
+              tabindex="-1"
+            >
+              <div class="fcol-card__img-wrap">
+                {%- if product.featured_image != blank -%}
+                  {{
+                    product.featured_image
+                    | image_url: width: 800
+                    | image_tag:
+                      class: 'fcol-card__img',
+                      loading: 'lazy',
+                      widths: '400, 600, 800',
+                      alt: product.featured_image.alt | default: product.title | escape
+                  }}
+                {%- else -%}
+                  <div class="fcol-card__img-placeholder" aria-hidden="true"></div>
+                {%- endif -%}
+              </div>
+            </a>
+
+            {%- comment -%} Card body {%- endcomment -%}
+            <div class="fcol-card__body">
+
+              <a href="{{ product.url }}" class="fcol-card__title-link">
+                <h2 class="fcol-card__title">{{ product.title }}</h2>
+              </a>
+
+              <p class="fcol-card__edition">
+                {{- 'sections.fien_collection.edition_label' | t -}}
+              </p>
+
+              {%- if product.options_with_values.size > 0 -%}
+                <div class="fcol-card__formats">
+                  {%- for value in product.options_with_values[0].values -%}
+                    <span class="fcol-card__format-tag">{{ value }}</span>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+              <div class="fcol-card__price-row">
+                <div class="fcol-card__price">
+                  <span class="fcol-card__price-from">
+                    {{- 'sections.fien_collection.from' | t -}}
+                  </span>
+                  {{ product.price_min | money_without_trailing_zeros }}
+                </div>
+              </div>
+
+              <a href="{{ product.url }}" class="fcol-card__btn">
+                {{- 'sections.fien_collection.select_options' | t -}}
+              </a>
+
+            </div>
+
+          </li>
+
+        {%- endfor -%}
+      </ul>
+
+      {%- comment -%} Load more {%- endcomment -%}
+      {%- if paginate.next -%}
+        <div class="fcol__loadmore">
+          <a href="{{ paginate.next.url }}" class="fcol__loadmore-btn">
+            {{- 'sections.fien_collection.load_more' | t -}}
+          </a>
+        </div>
+      {%- endif -%}
+
+    {%- else -%}
+
+      {%- comment -%} Empty state {%- endcomment -%}
+      <div class="fcol__empty">
+        <p>{{- 'sections.fien_collection.empty' | t -}}</p>
+        <a href="{{ collection.url }}" class="fcol__empty-link">
+          {{- 'sections.fien_collection.filter_all' | t -}}
+        </a>
+      </div>
+
+    {%- endif -%}
+
+  </div>
+
+</div>{%- comment -%} /.fcol {%- endcomment -%}
+
+{%- endpaginate -%}
+
+{% stylesheet %}
+  /* ── Section wrapper ──────────────────────────────────────────────────── */
+
+  .fcol {
+    background: #080808;
+    background: var(--black);
+  }
+
+  /* ── Collection page header ───────────────────────────────────────────── */
+
+  .fcol__header {
+    background: #080808;
+    background: var(--black);
+    padding: 80px 60px 60px;
+  }
+
+  .fcol__eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    color: var(--gold);
+    margin: 0 0 16px;
+  }
+
+  .fcol__title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
+    font-size: clamp(48px, 6vw, 80px);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: #f0ece4;
+    color: var(--white);
+    margin: 0 0 20px;
+  }
+
+  .fcol__subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    line-height: 1.8;
+    margin: 0;
+    max-width: 600px;
+  }
+
+  .fcol__divider {
+    height: 1px;
+    background: #c9a84c;
+    background: var(--gold);
+    opacity: 0.3;
+    margin-top: 40px;
+  }
+
+  /* ── Sticky filter + sort bar ─────────────────────────────────────────── */
+
+  .fcol__bar {
+    position: sticky;
+    top: 60px;
+    z-index: 50;
+    background: #0e0e0e;
+    background: var(--deep);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fcol__bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    min-height: 56px;
+  }
+
+  /* ── Filter buttons ───────────────────────────────────────────────────── */
+
+  .fcol__filters {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .fcol__filter-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 18px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .fcol__filter-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: #c9a84c;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  .fcol__filter-btn:hover {
+    color: #f0ece4;
+    color: var(--white);
+  }
+
+  .fcol__filter-btn--active {
+    color: #c9a84c;
+    color: var(--gold);
+  }
+
+  .fcol__filter-btn--active::after {
+    transform: scaleX(1);
+  }
+
+  /* ── Sort dropdown ────────────────────────────────────────────────────── */
+
+  .fcol__sort {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .fcol__sort-label {
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .fcol__sort-wrap {
+    position: relative;
+  }
+
+  .fcol__sort-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid var(--border);
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 32px 8px 12px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    /* caret arrow via background image */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(240,236,228,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+
+  .fcol__sort-select:hover,
+  .fcol__sort-select:focus {
+    border-color: rgba(201,168,76,0.4);
+    color: #f0ece4;
+    color: var(--white);
+    outline: none;
+  }
+
+  /* ── Product grid wrapper ─────────────────────────────────────────────── */
+
+  .fcol__grid-wrap {
+    background: #080808;
+    background: var(--black);
+    padding: 80px 60px 100px;
+  }
+
+  /* ── Product grid ─────────────────────────────────────────────────────── */
+
+  .fcol__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── Card — fully self-contained ──────────────────────────────────────── */
+
+  .fcol-card {
+    background: #161616;
+    border: 1px solid rgba(255,255,255,0.07);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .fcol-card:hover {
+    border-color: rgba(201,168,76,0.3);
+    transform: translateY(-4px);
+    z-index: 1;
+  }
+
+  /* ── Card image ───────────────────────────────────────────────────────── */
+
+  .fcol-card__img-link {
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  .fcol-card__img-wrap {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #1e1e1e;
+  }
+
+  .fcol-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .fcol-card:hover .fcol-card__img {
+    transform: scale(1.03);
+  }
+
+  .fcol-card__img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #1e1e1e;
+  }
+
+  /* ── Card body ────────────────────────────────────────────────────────── */
+
+  .fcol-card__body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #161616;
+  }
+
+  .fcol-card__title-link {
+    text-decoration: none;
+  }
+
+  .fcol-card__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 300;
+    color: #f0ece4;
+    color: var(--white);
+    margin: 0 0 6px;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+  }
+
+  .fcol-card__title-link:hover .fcol-card__title {
+    color: #c9a84c;
+    color: var(--gold);
+  }
+
+  .fcol-card__edition {
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    color: var(--gold);
+    margin: 0 0 16px;
+  }
+
+  /* ── Format tags ──────────────────────────────────────────────────────── */
+
+  .fcol-card__formats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .fcol-card__format-tag {
+    padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+  }
+
+  /* ── Price ────────────────────────────────────────────────────────────── */
+
+  .fcol-card__price-row {
+    margin-top: auto;
+    margin-bottom: 16px;
+  }
+
+  .fcol-card__price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 0.05em;
+    color: #c9a84c;
+    color: var(--gold);
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .fcol-card__price-from {
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CTA button ───────────────────────────────────────────────────────── */
+
+  .fcol-card__btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: #c9a84c;
+    background: var(--gold);
+    color: #080808;
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .fcol-card__btn:hover {
+    background: #e8c97a;
+    background: var(--gold-light);
+  }
+
+  /* ── Load more ────────────────────────────────────────────────────────── */
+
+  .fcol__loadmore {
+    text-align: center;
+    margin-top: 72px;
+  }
+
+  .fcol__loadmore-btn {
+    display: inline-block;
+    padding: 16px 56px;
+    border: 1px solid #c9a84c;
+    border: 1px solid var(--gold);
+    color: #c9a84c;
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .fcol__loadmore-btn:hover {
+    background: #c9a84c;
+    background: var(--gold);
+    color: #080808;
+  }
+
+  /* ── Empty state ──────────────────────────────────────────────────────── */
+
+  .fcol__empty {
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .fcol__empty p {
+    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    margin: 0 0 32px;
+  }
+
+  .fcol__empty-link {
+    display: inline-block;
+    padding: 14px 40px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid var(--border);
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .fcol__empty-link:hover {
+    border-color: #c9a84c;
+    border-color: var(--gold);
+    color: #c9a84c;
+    color: var(--gold);
+  }
+
+  /* ── Tablet ───────────────────────────────────────────────────────────── */
+
+  @media screen and (max-width: 989px) {
+    .fcol__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* ── Mobile ───────────────────────────────────────────────────────────── */
+
+  @media screen and (max-width: 749px) {
+    .fcol__header {
+      padding: 60px 24px 48px;
+    }
+
+    .fcol__bar-inner {
+      padding: 0 24px;
+      flex-wrap: wrap;
+      gap: 0;
+      min-height: auto;
+    }
+
+    .fcol__filters {
+      order: 1;
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+      gap: 0;
+    }
+
+    .fcol__filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .fcol__filter-btn {
+      white-space: nowrap;
+      padding: 14px 14px;
+      font-size: 9px;
+      flex-shrink: 0;
+    }
+
+    .fcol__sort {
+      order: 2;
+      width: 100%;
+      padding: 10px 0 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      justify-content: flex-end;
+    }
+
+    .fcol__grid-wrap {
+      padding: 48px 24px 64px;
+    }
+
+    .fcol__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var select = document.getElementById('FcolSort-{{ section.id }}');
+    if (!select) return;
+    select.addEventListener('change', function () {
+      window.location = select.value;
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-product-grid.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "default": 12,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "The collection"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle (shown when collection has no description)",
+      "default": "Fine art prints for collectors."
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.main-collection-product-grid.name"
+    }
+  ]
+}
+{% endschema %}

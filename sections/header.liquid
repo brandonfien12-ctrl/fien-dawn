@@ -1,0 +1,641 @@
+{%- comment -%} ── Fien Studio navigation ──────────────────────────────────── {%- endcomment -%}
+
+<nav
+  class="fien-nav"
+  id="fienNav"
+  role="navigation"
+  aria-label="{{ 'sections.fien_nav.aria_label' | t }}"
+>
+  <a href="{{ routes.root_url }}" class="fien-nav__logo">
+    FIEN<span>STUDIOS</span>
+  </a>
+
+  {%- if section.settings.menu != blank -%}
+    <ul class="fien-nav__links" role="list">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <li>
+          <a
+            href="{{ link.url }}"
+            class="fien-nav__link{% if link.active %} fien-nav__link--active{% endif %}"
+            {% if link.active %}aria-current="page"{% endif %}
+          >
+            {{- link.title -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  <div class="fien-nav__actions">
+
+    {%- comment -%} Cart icon — id="cart-icon-bubble" is required by Dawn's cart-drawer.js {%- endcomment -%}
+    <a
+      href="{{ routes.cart_url }}"
+      class="fien-nav__cart"
+      id="cart-icon-bubble"
+      aria-label="{{ 'templates.cart.cart' | t }}"
+    >
+      {%- if cart == empty -%}
+        <span class="svg-wrapper">{{- 'icon-cart-empty.svg' | inline_asset_content -}}</span>
+      {%- else -%}
+        <span class="svg-wrapper">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
+      {%- endif -%}
+      <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+      {%- if cart != empty -%}
+        <div class="cart-count-bubble">
+          {%- if cart.item_count < 100 -%}
+            <span aria-hidden="true">{{ cart.item_count }}</span>
+          {%- endif -%}
+          <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+        </div>
+      {%- endif -%}
+    </a>
+
+    <button
+      class="fien-nav__hamburger"
+      id="fienHamburger"
+      aria-expanded="false"
+      aria-controls="fienMobileNav"
+      aria-label="{{ 'sections.fien_nav.menu_open' | t }}"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+
+  </div>
+</nav>
+
+{%- comment -%} ── Mobile full-screen overlay ──────────────────────────────── {%- endcomment -%}
+
+<div
+  class="fien-nav__mobile"
+  id="fienMobileNav"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ 'sections.fien_nav.mobile_menu_label' | t }}"
+>
+  <button
+    class="fien-nav__mobile-close"
+    id="fienMobileClose"
+    aria-label="{{ 'sections.fien_nav.menu_close' | t }}"
+  >
+    &times;
+  </button>
+
+  {%- if section.settings.menu != blank -%}
+    <ul class="fien-nav__mobile-links" role="list">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <li>
+          <a
+            href="{{ link.url }}"
+            class="fien-nav__mobile-link"
+            {% if link.active %}aria-current="page"{% endif %}
+          >
+            {{- link.title -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if settings.logo %}
+      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {% endif %}
+    "sameAs": [
+      {{ settings.social_twitter_link | json }},
+      {{ settings.social_facebook_link | json }},
+      {{ settings.social_pinterest_link | json }},
+      {{ settings.social_instagram_link | json }},
+      {{ settings.social_tiktok_link | json }},
+      {{ settings.social_tumblr_link | json }},
+      {{ settings.social_snapchat_link | json }},
+      {{ settings.social_youtube_link | json }},
+      {{ settings.social_vimeo_link | json }}
+    ],
+    "url": {{ request.origin | append: page.url | json }}
+  }
+</script>
+
+{%- if request.page_type == 'index' -%}
+  {%- assign potential_action_target = request.origin | append: routes.search_url | append: '?q={search_term_string}' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ request.origin | append: page.url | json }}
+    }
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  /* ── Fien nav — fixed bar ──────────────────────────────────────────────── */
+
+  .fien-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s ease, border-color 0.3s ease, padding 0.3s ease;
+  }
+
+  .fien-nav.is-scrolled {
+    background: rgba(8, 8, 8, 0.97);
+    border-bottom-color: var(--border);
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  /* ── Logo ─────────────────────────────────────────────────────────────── */
+
+  .fien-nav__logo {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .fien-nav__logo span {
+    color: var(--gold);
+  }
+
+  /* ── Desktop links ────────────────────────────────────────────────────── */
+
+  .fien-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .fien-nav__link {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .fien-nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  .fien-nav__link:hover,
+  .fien-nav__link--active {
+    color: var(--white);
+  }
+
+  .fien-nav__link:hover::after,
+  .fien-nav__link--active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* ── Right-side actions (cart + hamburger) ────────────────────────────── */
+
+  .fien-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ── Cart icon ─────────────────────────────────────────────────────────── */
+
+  .fien-nav__cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+
+  .fien-nav__cart:hover {
+    color: var(--gold);
+  }
+
+  .fien-nav__cart .svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fien-nav__cart .icon-cart,
+  .fien-nav__cart .icon-cart-empty {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ── Cart count bubble ────────────────────────────────────────────────── */
+
+  .fien-nav__cart .cart-count-bubble {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background: var(--gold);
+    color: #080808;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1;
+    min-width: 16px;
+    height: 16px;
+    width: auto;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    /* reset Dawn's base.css positioning */
+    bottom: auto;
+    left: auto;
+  }
+
+  /* ── Hamburger (mobile only) ──────────────────────────────────────────── */
+
+  .fien-nav__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .fien-nav__hamburger span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: var(--white);
+  }
+
+  /* ── Mobile full-screen overlay ───────────────────────────────────────── */
+
+  .fien-nav__mobile {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(8, 8, 8, 0.97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .fien-nav__mobile.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .fien-nav__mobile-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .fien-nav__mobile-close:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .fien-nav__mobile-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .fien-nav__mobile-link {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 8vw, 64px);
+    letter-spacing: 0.06em;
+    color: var(--white);
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+    transition: color 0.3s ease;
+  }
+
+  .fien-nav__mobile-link:hover {
+    color: var(--gold);
+  }
+
+  /* ── Mobile breakpoint ────────────────────────────────────────────────── */
+
+  @media screen and (max-width: 749px) {
+    .fien-nav {
+      padding: 20px 24px;
+    }
+
+    .fien-nav.is-scrolled {
+      padding: 14px 24px;
+    }
+
+    .fien-nav__links {
+      display: none;
+    }
+
+    .fien-nav__hamburger {
+      display: flex;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var nav       = document.getElementById('fienNav');
+    var hamburger = document.getElementById('fienHamburger');
+    var mobileNav = document.getElementById('fienMobileNav');
+    var closeBtn  = document.getElementById('fienMobileClose');
+
+    // ── Scroll state ────────────────────────────────────────────────────
+    function onScroll() {
+      nav.classList.toggle('is-scrolled', window.scrollY > 60);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ── Mobile menu ──────────────────────────────────────────────────────
+    function openMenu() {
+      mobileNav.classList.add('is-open');
+      mobileNav.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      mobileNav.classList.remove('is-open');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    if (hamburger) hamburger.addEventListener('click', openMenu);
+    if (closeBtn)  closeBtn.addEventListener('click', closeMenu);
+
+    // Close on any mobile link click (navigation is happening)
+    if (mobileNav) {
+      mobileNav.querySelectorAll('.fien-nav__mobile-link').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "section-header",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "logo_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.header.settings.logo_position.options__2.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.header.settings.logo_position.options__3.label"
+        },
+        {
+          "value": "middle-left",
+          "label": "t:sections.header.settings.logo_position.options__1.label"
+        },
+        {
+          "value": "middle-center",
+          "label": "t:sections.header.settings.logo_position.options__4.label"
+        }
+      ],
+      "default": "middle-left",
+      "label": "t:sections.header.settings.logo_position.label",
+      "info": "t:sections.header.settings.logo_help.content"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.header.settings.mobile_logo_position.label"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
+        },
+        {
+          "value": "mega",
+          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
+        }
+      ],
+      "default": "dropdown",
+      "label": "t:sections.header.settings.menu_type_desktop.label"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
+        },
+        {
+          "value": "always",
+          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "t:sections.header.settings.sticky_header_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__1.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "menu_color_scheme",
+      "label": "t:sections.header.settings.menu_color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__utilities.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "t:sections.header.settings.enable_country_selector.label",
+      "info": "t:sections.header.settings.enable_country_selector.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "t:sections.header.settings.enable_language_selector.label",
+      "info": "t:sections.header.settings.enable_language_selector.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_customer_avatar",
+      "default": true,
+      "label": "t:sections.header.settings.enable_customer_avatar.label",
+      "info": "t:sections.header.settings.enable_customer_avatar.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.header.settings.margin_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

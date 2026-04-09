@@ -1,0 +1,86 @@
+/* ─── Fien Studio — Base styles ────────────────────────────────────────────
+   Custom cursor, scroll-reveal classes, and keyframe animations.
+   Cursor rules are scoped to (hover: hover) and (pointer: fine) so they
+   never affect touch / mobile devices.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Global background — override Dawn's light color scheme ──────────────── */
+
+main,
+.content-for-layout {
+  background: #080808 !important;
+  background: var(--black) !important;
+}
+
+/* ── Custom cursor ────────────────────────────────────────────────────────── */
+
+@media (hover: hover) and (pointer: fine) {
+  .fien-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .fien-cursor__dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+  }
+
+  .fien-cursor__ring {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(201, 168, 76, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  }
+}
+
+/* ── Scroll reveal ────────────────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Keyframe animations ──────────────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}

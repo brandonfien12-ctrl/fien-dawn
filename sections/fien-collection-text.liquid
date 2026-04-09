@@ -1,0 +1,92 @@
+<section class="fct">
+  <div class="fct__inner">
+
+    {%- if section.settings.label != blank -%}
+      <p class="fct__label">{{- section.settings.label -}}</p>
+    {%- endif -%}
+
+    {%- if section.settings.collection_description != blank -%}
+      <div class="fct__body">{{ section.settings.collection_description }}</div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ── Collection text section ────────────────────────────────────────────── */
+
+  .fct {
+    background: #080808;
+    background: var(--black);
+    padding: 80px 60px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .fct__inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .fct__label {
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    color: var(--gold);
+    margin: 0 0 24px;
+  }
+
+  .fct__body {
+    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
+    font-size: clamp(19px, 2.2vw, 23px);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(240, 236, 228, 0.92);
+    line-height: 1.85;
+    margin: 0;
+  }
+
+  .fct__body p {
+    margin: 0 0 1em;
+  }
+
+  .fct__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .fct {
+      padding: 60px 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label (optional)",
+      "default": "Our Story"
+    },
+    {
+      "type": "richtext",
+      "id": "collection_description",
+      "label": "Collection description",
+      "default": "<p>The Anniversary Collection marks 10 years of chasing light, stillness, and the stories that live between moments. Each image in this collection is produced as a strict limited edition \u2014 only 3 prints per image, ever. Once they\u2019re gone, they\u2019re gone. This collection run closes permanently on June 10, 2026. If a piece speaks to you, don\u2019t wait.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection text"
+    }
+  ]
+}
+{% endschema %}

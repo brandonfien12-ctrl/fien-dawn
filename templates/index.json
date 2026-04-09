@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "fien_hero": {
+      "type": "fien-hero",
+      "settings": {
+        "eyebrow": "Outdoor & wildlife photography",
+        "heading_line_1": "The untold",
+        "heading_line_2": "Stories.",
+        "subtitle": "They say a picture is worth a thousand words - but what if the most powerful ones were never spoken at all?",
+        "cta_primary_label": "View prints",
+        "cta_primary_url": "",
+        "video": "shopify://files/videos/Montage1080pm.mp4"
+      }
+    },
+    "fien_anniversary_banner": {
+      "type": "fien-anniversary-banner",
+      "settings": {
+        "eyebrow": "Celebrating 10 years",
+        "numeral": "X",
+        "heading_line_1": "Anniversary",
+        "heading_line_2": "Collection",
+        "subtitle": "All 10 prints available",
+        "cta_label": "",
+        "cta_url": ""
+      }
+    },
+    "fien_video": {
+      "type": "fien-video",
+      "settings": {
+        "eyebrow": "Behind the lens",
+        "heading": "The Vision",
+        "video_url": ""
+      }
+    },
+    "fien_collection_text": {
+      "type": "fien-collection-text",
+      "settings": {
+        "label": "Our Story",
+        "collection_description": "<p>The Anniversary Collection marks 10 years of chasing light, stillness, and the stories that live between moments. Each image in this collection is produced as a strict limited edition \u2014 only 3 prints per image, ever. Once they\u2019re gone, they\u2019re gone. This collection run closes permanently on June 10, 2026. If a piece speaks to you, don\u2019t wait.</p>"
+      }
+    },
+    "fien_featured_prints": {
+      "type": "fien-featured-prints",
+      "settings": {
+        "eyebrow": "The collection",
+        "heading": "The Untold Stories",
+        "subtitle": "Each image is produced in a limited edition. Printed to order.",
+        "collection": "",
+        "products_to_show": 10
+      }
+    }
+  },
+  "order": [
+    "fien_hero",
+    "fien_anniversary_banner",
+    "fien_video",
+    "fien_collection_text",
+    "fien_featured_prints"
+  ]
+}

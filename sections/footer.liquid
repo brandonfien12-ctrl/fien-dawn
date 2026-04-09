@@ -1,0 +1,121 @@
+<footer class="fien-footer">
+
+  <div class="fien-footer__inner">
+
+    {%- comment -%} Logo {%- endcomment -%}
+    <a href="{{ routes.root_url }}" class="fien-footer__logo" aria-label="{{ shop.name }}">
+      FIEN<span>STUDIOS</span>
+    </a>
+
+    {%- comment -%} Copyright {%- endcomment -%}
+    <p class="fien-footer__copy">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{- 'sections.fien_footer.rights' | t -}}
+    </p>
+
+    {%- comment -%} Social links {%- endcomment -%}
+    <nav class="fien-footer__socials" aria-label="{{ 'sections.fien_footer.social_label' | t }}">
+      {%- if settings.social_instagram_link != blank -%}
+        <a href="{{ settings.social_instagram_link }}" class="fien-footer__social-link" target="_blank" rel="noopener" aria-label="{{ 'general.social.links.instagram' | t }}">
+          {{- 'sections.fien_footer.instagram' | t -}}
+        </a>
+      {%- endif -%}
+      {%- if settings.social_youtube_link != blank -%}
+        <a href="{{ settings.social_youtube_link }}" class="fien-footer__social-link" target="_blank" rel="noopener" aria-label="{{ 'general.social.links.youtube' | t }}">
+          {{- 'sections.fien_footer.youtube' | t -}}
+        </a>
+      {%- endif -%}
+    </nav>
+
+  </div>
+
+</footer>
+
+{% stylesheet %}
+  /* ── Footer ───────────────────────────────────────────────────────────── */
+
+  .fien-footer {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+  }
+
+  .fien-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 60px;
+  }
+
+  /* ── Logo ─────────────────────────────────────────────────────────────── */
+
+  .fien-footer__logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  .fien-footer__logo span {
+    color: var(--gold);
+  }
+
+  /* ── Copyright ────────────────────────────────────────────────────────── */
+
+  .fien-footer__copy {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0;
+    text-align: center;
+  }
+
+  /* ── Social links ─────────────────────────────────────────────────────── */
+
+  .fien-footer__socials {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .fien-footer__social-link {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .fien-footer__social-link:hover {
+    color: var(--white);
+  }
+
+  /* ── Mobile ───────────────────────────────────────────────────────────── */
+
+  @media screen and (max-width: 749px) {
+    .fien-footer__inner {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 30px 24px;
+      text-align: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

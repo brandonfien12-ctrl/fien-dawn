@@ -1,0 +1,227 @@
+<section class="fab">
+  <div class="fab__frame">
+
+    <div class="fab__body">
+
+      {%- comment -%} Large gold numeral — left column {%- endcomment -%}
+      <div class="fab__numeral" aria-hidden="true">
+        {{- section.settings.numeral -}}
+      </div>
+
+      {%- comment -%} Text block — right column {%- endcomment -%}
+      <div class="fab__text">
+        <p class="fab__eyebrow">{{- section.settings.eyebrow -}}</p>
+
+        <h2 class="fab__heading">
+          <span class="fab__line">{{- section.settings.heading_line_1 -}}</span>
+          <span class="fab__line">{{- section.settings.heading_line_2 -}}</span>
+        </h2>
+
+        {%- if section.settings.cta_label != blank -%}
+          <a
+            href="{{ section.settings.cta_url | default: '/collections/all' }}"
+            class="fab__cta"
+          >
+            {{- section.settings.cta_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ── Anniversary banner ────────────────────────────────────────────────── */
+
+  .fab {
+    background: #080808;
+    background: var(--black);
+    padding: 36px 60px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── Gold-bordered frame ──────────────────────────────────────────────── */
+
+  .fab__frame {
+    border: 1px solid rgba(201, 168, 76, 0.5);
+    padding: 27px 42px;
+    width: 100%;
+    max-width: 860px;
+  }
+
+  /* ── Body: numeral left, text right ───────────────────────────────────── */
+
+  .fab__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  /* ── Large gold numeral ───────────────────────────────────────────────── */
+
+  .fab__numeral {
+    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
+    font-size: clamp(54px, 7.5vw, 98px);
+    line-height: 0.85;
+    letter-spacing: 0;
+    color: #c9a84c;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-left: -9px;
+    user-select: none;
+  }
+
+  /* ── Text block ───────────────────────────────────────────────────────── */
+
+  .fab__text {
+    flex-shrink: 0;
+  }
+
+  .fab__eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    color: var(--gold);
+    margin: 0 0 8px;
+  }
+
+  /* ── Main heading ─────────────────────────────────────────────────────── */
+
+  .fab__heading {
+    margin: 0 0 12px;
+    line-height: 1;
+  }
+
+  .fab__line {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
+    font-size: clamp(27px, 3.75vw, 51px);
+    letter-spacing: 0.05em;
+    line-height: 0.95;
+    color: #f0ece4;
+    color: var(--white);
+  }
+
+  /* ── Subtitle ─────────────────────────────────────────────────────────── */
+
+  .fab__subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
+    font-size: 11px;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(240,236,228,0.5);
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ── Optional CTA ─────────────────────────────────────────────────────── */
+
+  .fab__cta {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 14px 40px;
+    border: 1px solid #c9a84c;
+    border: 1px solid var(--gold);
+    color: #c9a84c;
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .fab__cta:hover {
+    background: #c9a84c;
+    background: var(--gold);
+    color: #080808;
+  }
+
+  /* ── Mobile ───────────────────────────────────────────────────────────── */
+
+  @media screen and (max-width: 749px) {
+    .fab {
+      padding: 24px 18px;
+    }
+
+    .fab__frame {
+      padding: 21px 18px;
+    }
+
+    .fab__body {
+      gap: 15px;
+    }
+
+    .fab__numeral {
+      font-size: clamp(42px, 12vw, 60px);
+      margin-left: -5px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Anniversary banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Celebrating 10 years"
+    },
+    {
+      "type": "text",
+      "id": "numeral",
+      "label": "Large numeral (left)",
+      "default": "X"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Anniversary"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "All 10 prints available"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label (optional)"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Anniversary banner"
+    }
+  ]
+}
+{% endschema %}

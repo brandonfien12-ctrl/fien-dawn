@@ -1,0 +1,22 @@
+# Ignore everything by default
+*
+.*
+
+# Track only Shopify theme directories
+!assets/
+!assets/**
+!blocks/
+!blocks/**
+!config/
+!config/**
+!layout/
+!layout/**
+!locales/
+!locales/**
+!sections/
+!sections/**
+!snippets/
+!snippets/**
+!templates/
+!templates/**
+!.gitignore
