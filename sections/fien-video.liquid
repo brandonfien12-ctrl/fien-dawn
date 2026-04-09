@@ -10,28 +10,17 @@
     {%- endif -%}
 
     <div class="fvs__video-wrap">
-      {%- if section.settings.video_url != blank -%}
-        {%- comment -%}
-          Paste your YouTube embed URL  →  https://www.youtube.com/embed/VIDEO_ID
-          or your Vimeo embed URL       →  https://player.vimeo.com/video/VIDEO_ID
-          into the "Video embed URL" field in the theme editor (or directly here).
-        {%- endcomment -%}
-        <iframe
-          class="fvs__iframe"
-          src="{{ section.settings.video_url }}"
-          title="{{ section.settings.heading | default: 'Video' | escape }}"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
-      {%- else -%}
-        <div class="fvs__placeholder">
-          <span class="fvs__placeholder-icon" aria-hidden="true">▶</span>
-          <p class="fvs__placeholder-text">Add a YouTube or Vimeo embed URL in the theme editor</p>
-        </div>
-      {%- endif -%}
+      <iframe
+        class="fvs__iframe"
+        src="https://player.vimeo.com/video/1181736301?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+        title="The Untold Stories"
+      ></iframe>
     </div>
+    <script src="https://player.vimeo.com/api/player.js"></script>
 
   </div>
 </section>
