@@ -539,7 +539,7 @@
       var sectionId = carouselEl.dataset.section;
       var cards     = Array.prototype.slice.call(carouselEl.querySelectorAll('.fpc-card'));
       var dots      = Array.prototype.slice.call(
-        document.querySelectorAll('#fpcSection-' + sectionId + ' .fpc__dot')
+        carouselEl.closest('.fpc').querySelectorAll('.fpc__dot')
       );
       var prevBtn   = carouselEl.querySelector('.fpc__arrow--prev');
       var nextBtn   = carouselEl.querySelector('.fpc__arrow--next');
