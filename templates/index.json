@@ -43,10 +43,7 @@
     },
     "fien_collection_text": {
       "type": "fien-collection-text",
-      "settings": {
-        "label": "Our Story",
-        "collection_description": "<p>The Anniversary Collection marks 10 years of chasing light, stillness, and the stories that live between moments. Each image in this collection is produced as a strict limited edition \u2014 only 3 prints per image, ever. Once they\u2019re gone, they\u2019re gone. This collection run closes permanently on June 10, 2026. If a piece speaks to you, don\u2019t wait.</p>"
-      }
+      "settings": {}
     },
     "fien_featured_prints": {
       "type": "fien-featured-prints",
@@ -63,7 +60,7 @@
     "fien_hero",
     "fien_anniversary_banner",
     "fien_video",
-    "fien_collection_text",
-    "fien_featured_prints"
+    "fien_featured_prints",
+    "fien_collection_text"
   ]
 }
