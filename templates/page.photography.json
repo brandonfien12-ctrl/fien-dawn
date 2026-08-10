@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "gallery": {
+      "type": "portfolio-gallery",
+      "blocks": {
+        "media_1": {
+          "type": "media",
+          "settings": {}
+        },
+        "media_2": {
+          "type": "media",
+          "settings": {}
+        },
+        "media_3": {
+          "type": "media",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "media_1",
+        "media_2",
+        "media_3"
+      ],
+      "settings": {
+        "eyebrow": "Selected work",
+        "heading": "Photography",
+        "intro": "<p>A collection of outdoor and wildlife photography.</p>",
+        "columns": 3
+      }
+    }
+  },
+  "order": [
+    "gallery"
+  ]
+}

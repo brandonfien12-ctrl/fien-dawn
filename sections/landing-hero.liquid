@@ -1,0 +1,331 @@
+<section class="landing-hero" id="landing-hero-{{ section.id }}">
+
+  {%- comment -%} Logo {%- endcomment -%}
+  {%- if section.settings.logo != blank -%}
+    <div class="landing-hero__logo" style="--logo-width: {{ section.settings.logo_width }}px;">
+      {{
+        section.settings.logo
+        | image_url: width: 900
+        | image_tag:
+          loading: 'eager',
+          class: 'landing-hero__logo-img',
+          widths: '200, 300, 450, 600, 900',
+          sizes: '(max-width: 749px) 60vw, 450px'
+      }}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} About {%- endcomment -%}
+  {%- if section.settings.about_text != blank or section.settings.about_image != blank -%}
+    <div class="landing-hero__about{% if section.settings.about_image != blank %} landing-hero__about--split{% endif %}">
+      {%- if section.settings.about_image != blank -%}
+        <div class="landing-hero__about-media">
+          {{
+            section.settings.about_image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              class: 'landing-hero__about-img',
+              widths: '400, 600, 800, 1200',
+              sizes: '(min-width: 750px) 45vw, 100vw'
+          }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.about_text != blank -%}
+        <div class="landing-hero__about-text rte">
+          {{ section.settings.about_text }}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} CTA buttons — each label and URL editable in the customizer {%- endcomment -%}
+  <div class="landing-hero__cta">
+    {%- if section.settings.cta1_label != blank -%}
+      <a href="{{ section.settings.cta1_url | default: '/pages/photography' }}" class="fien-btn fien-btn--primary">
+        {{- section.settings.cta1_label -}}
+      </a>
+    {%- endif -%}
+    {%- if section.settings.cta2_label != blank -%}
+      <a href="{{ section.settings.cta2_url | default: '/pages/videography' }}" class="fien-btn fien-btn--primary">
+        {{- section.settings.cta2_label -}}
+      </a>
+    {%- endif -%}
+    {%- if section.settings.cta3_label != blank -%}
+      <a href="{{ section.settings.cta3_url | default: '/pages/client' }}" class="fien-btn fien-btn--outline">
+        {{- section.settings.cta3_label -}}
+      </a>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Repeatable photo / video blocks — add, remove or reorder freely {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <div class="landing-hero__grid" style="--columns: {{ section.settings.columns }};">
+      {%- for block in section.blocks -%}
+        <div class="landing-hero__grid-item" {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+            {%- when 'photo' -%}
+              {% render 'fien-media-item',
+                image: block.settings.image,
+                caption: block.settings.caption
+              %}
+            {%- when 'video' -%}
+              {% render 'fien-media-item',
+                video: block.settings.video,
+                video_url: block.settings.video_url,
+                caption: block.settings.caption
+              %}
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+</section>
+
+{% stylesheet %}
+  .landing-hero {
+    background: var(--black);
+    padding: 120px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .landing-hero__logo {
+    text-align: center;
+  }
+
+  .landing-hero__logo-img {
+    width: var(--logo-width, 320px);
+    max-width: 80vw;
+    height: auto;
+    display: inline-block;
+  }
+
+  .landing-hero__about {
+    max-width: 760px;
+    width: 100%;
+  }
+
+  .landing-hero__about--split {
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 45% 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .landing-hero__about-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+  }
+
+  .landing-hero__about-text {
+    font-family: var(--font-serif);
+    font-size: clamp(16px, 1.6vw, 20px);
+    line-height: 1.8;
+    color: var(--white);
+  }
+
+  .landing-hero__cta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .fien-btn--outline {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+
+  .fien-btn--outline:hover {
+    background: var(--gold);
+    color: #080808;
+    transform: translateY(-2px);
+  }
+
+  .landing-hero__grid {
+    width: 100%;
+    max-width: 1400px;
+    display: grid;
+    grid-template-columns: repeat(var(--columns, 3), 1fr);
+    gap: 24px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .landing-hero__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .landing-hero {
+      padding: 80px 24px;
+      gap: 48px;
+    }
+
+    .landing-hero__about--split {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .landing-hero__cta {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .landing-hero__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Landing hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 120,
+      "max": 640,
+      "step": 10,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "header",
+      "content": "About"
+    },
+    {
+      "type": "richtext",
+      "id": "about_text",
+      "label": "About text",
+      "default": "<p>Brandon Fien is an outdoor and wildlife fine art photographer capturing the untold stories of the natural world.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "about_image",
+      "label": "About image (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "cta1_label",
+      "label": "Button 1 label",
+      "default": "Photography"
+    },
+    {
+      "type": "url",
+      "id": "cta1_url",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "cta2_label",
+      "label": "Button 2 label",
+      "default": "Videography"
+    },
+    {
+      "type": "url",
+      "id": "cta2_url",
+      "label": "Button 2 link"
+    },
+    {
+      "type": "text",
+      "id": "cta3_label",
+      "label": "Button 3 label",
+      "default": "Client Page"
+    },
+    {
+      "type": "url",
+      "id": "cta3_url",
+      "label": "Button 3 link"
+    },
+    {
+      "type": "header",
+      "content": "Media grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns on desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "max_blocks": 50,
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (uploaded)"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Video URL (YouTube or Vimeo)",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing hero",
+      "blocks": [
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" }
+      ]
+    }
+  ]
+}
+{% endschema %}
