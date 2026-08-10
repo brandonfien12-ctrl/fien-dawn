@@ -13,10 +13,10 @@
       "type": "fien-hero",
       "settings": {
         "eyebrow": "Outdoor & wildlife photography",
-        "heading_line_1": "The untold",
-        "heading_line_2": "Stories.",
+        "heading_line_1": "FIEN",
+        "heading_line_2": "STUDIOS",
         "subtitle": "They say a picture is worth a thousand words - but what if the most powerful ones were never spoken at all?",
-        "cta_primary_label": "View prints",
+        "cta_primary_label": "View Portfolio",
         "cta_primary_url": "",
         "video": "shopify://files/videos/MontageLoop.mp4"
       }
@@ -32,21 +32,10 @@
         "cta_label": "",
         "cta_url": ""
       }
-    },
-    "fien_featured_prints": {
-      "type": "fien-featured-prints",
-      "settings": {
-        "eyebrow": "The collection",
-        "heading": "Fine art prints",
-        "subtitle": "Each image is produced in a limited edition. Printed to order.",
-        "collection": "",
-        "products_to_show": 10
-      }
     }
   },
   "order": [
     "fien_hero",
-    "fien_anniversary_banner",
-    "fien_featured_prints"
+    "fien_anniversary_banner"
   ]
 }
