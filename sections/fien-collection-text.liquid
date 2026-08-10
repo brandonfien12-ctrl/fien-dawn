@@ -1,0 +1,75 @@
+<section class="fct">
+  <div class="fct__img-wrap">
+    <img
+      src="{{ 'fien-edition-banner.png' | asset_url }}"
+      alt="Limited to 3 per image. Permanently retires June 10, 2026."
+      class="fct__img"
+      loading="lazy"
+    >
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ── Collection text section ────────────────────────────────────────────── */
+
+  .fct {
+    background: #080808;
+    background: var(--black);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .fct__img-wrap {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Left and right gradient fades to blend into the black background */
+  .fct__img-wrap::before,
+  .fct__img-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .fct__img-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, #080808 0%, transparent 100%);
+  }
+
+  .fct__img-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, #080808 0%, transparent 100%);
+  }
+
+  .fct__img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media screen and (max-width: 749px) {
+    .fct__img-wrap::before,
+    .fct__img-wrap::after {
+      width: 40px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection text",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection text"
+    }
+  ]
+}
+{% endschema %}

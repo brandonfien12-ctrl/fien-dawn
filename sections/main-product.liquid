@@ -838,32 +838,27 @@
 {% endstylesheet %}
 
 {% javascript %}
-  (function () {
-    var gallery = document.getElementById('fppGallery-{{ section.id }}');
+  document.addEventListener('click', function (e) {
+    var thumb = e.target.closest('.fpp__thumb');
+    if (!thumb) return;
+
+    var gallery = thumb.closest('.fpp__gallery');
     if (!gallery) return;
 
-    var mainImg = document.getElementById('fppMainImage-{{ section.id }}');
+    var mainImg = gallery.querySelector('.fpp__main-img');
     if (!mainImg) return;
 
-    var thumbs = gallery.querySelectorAll('.fpp__thumb');
+    if (thumb.dataset.src) {
+      mainImg.src = thumb.dataset.src;
+      mainImg.srcset = thumb.dataset.srcset || '';
+      if (thumb.dataset.alt) mainImg.alt = thumb.dataset.alt;
+    }
 
-    thumbs.forEach(function (thumb) {
-      thumb.addEventListener('click', function () {
-        var src = thumb.dataset.src;
-        var srcset = thumb.dataset.srcset;
-        var alt = thumb.dataset.alt;
-
-        if (mainImg && src) {
-          mainImg.src = src;
-          if (srcset) mainImg.srcset = srcset;
-          if (alt) mainImg.alt = alt;
-        }
-
-        thumbs.forEach(function (t) { t.classList.remove('fpp__thumb--active'); });
-        thumb.classList.add('fpp__thumb--active');
-      });
+    gallery.querySelectorAll('.fpp__thumb').forEach(function (t) {
+      t.classList.remove('fpp__thumb--active');
     });
-  })();
+    thumb.classList.add('fpp__thumb--active');
+  });
 {% endjavascript %}
 
 {% schema %}
