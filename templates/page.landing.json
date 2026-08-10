@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "landing_hero": {
+      "type": "landing-hero",
+      "blocks": {
+        "photo_1": {
+          "type": "photo",
+          "settings": {
+            "caption": "Add a caption in the theme editor"
+          }
+        },
+        "photo_2": {
+          "type": "photo",
+          "settings": {}
+        },
+        "photo_3": {
+          "type": "photo",
+          "settings": {}
+        },
+        "video_1": {
+          "type": "video",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "photo_1",
+        "photo_2",
+        "photo_3",
+        "video_1"
+      ],
+      "settings": {
+        "logo_width": 320,
+        "about_text": "<p>Brandon Fien is an outdoor and wildlife fine art photographer capturing the untold stories of the natural world.</p>",
+        "portfolio_label": "View portfolio",
+        "cta1_label": "Photography",
+        "cta1_url": "/pages/photography",
+        "cta2_label": "Videography",
+        "cta2_url": "/pages/videography",
+        "cta3_label": "Client Portal",
+        "cta3_url": "/pages/client",
+        "columns": 3
+      }
+    }
+  },
+  "order": [
+    "landing_hero"
+  ]
+}

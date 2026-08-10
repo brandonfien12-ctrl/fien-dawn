@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "client_gate": {
+      "type": "client-gate",
+      "blocks": {
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Welcome — your gallery is below.</p>"
+          }
+        },
+        "media_1": {
+          "type": "media",
+          "settings": {}
+        },
+        "media_2": {
+          "type": "media",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "text_1",
+        "media_1",
+        "media_2"
+      ],
+      "settings": {
+        "password": "fien2026",
+        "heading": "Client page",
+        "intro": "<p>Enter the password provided to view your gallery.</p>",
+        "placeholder": "Password",
+        "button_label": "Enter",
+        "error_message": "Incorrect password. Please try again."
+      }
+    }
+  },
+  "order": [
+    "client_gate"
+  ]
+}

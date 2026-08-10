@@ -276,6 +276,9 @@
     }
   },
   "sections": {
+    "portfolio_gallery": {
+      "empty": "Add photos or videos in the theme editor."
+    },
     "fien_nav": {
       "aria_label": "Main navigation",
       "mobile_menu_label": "Mobile navigation",

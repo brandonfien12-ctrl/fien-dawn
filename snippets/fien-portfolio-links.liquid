@@ -1,0 +1,37 @@
+{% doc %}
+  Renders the three "View portfolio" dropdown links (Photography, Videography,
+  Client Portal) as <li> items. Shared by the header nav (desktop + mobile) and
+  the landing hero so the link set stays defined in one place. Each link is only
+  rendered when its label is set, and falls back to the matching page URL.
+
+  @param {string} item_class - CSS class applied to each link <a>
+  @param {string} [l1_label] - Link 1 label (e.g. Photography)
+  @param {string} [l1_url] - Link 1 destination (defaults to /pages/photography)
+  @param {string} [l2_label] - Link 2 label (e.g. Videography)
+  @param {string} [l2_url] - Link 2 destination (defaults to /pages/videography)
+  @param {string} [l3_label] - Link 3 label (e.g. Client Portal)
+  @param {string} [l3_url] - Link 3 destination (defaults to /pages/client)
+
+  @example
+  {% render 'fien-portfolio-links',
+    item_class: 'fien-nav__submenu-link',
+    l1_label: section.settings.portfolio_link1_label,
+    l1_url: section.settings.portfolio_link1_url
+  %}
+{% enddoc %}
+
+{%- if l1_label != blank -%}
+  <li>
+    <a class="{{ item_class }}" href="{{ l1_url | default: '/pages/photography' }}">{{ l1_label }}</a>
+  </li>
+{%- endif -%}
+{%- if l2_label != blank -%}
+  <li>
+    <a class="{{ item_class }}" href="{{ l2_url | default: '/pages/videography' }}">{{ l2_label }}</a>
+  </li>
+{%- endif -%}
+{%- if l3_label != blank -%}
+  <li>
+    <a class="{{ item_class }}" href="{{ l3_url | default: '/pages/client' }}">{{ l3_label }}</a>
+  </li>
+{%- endif -%}
