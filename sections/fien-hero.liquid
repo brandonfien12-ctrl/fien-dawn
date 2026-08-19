@@ -401,6 +401,23 @@
       if (event.key === 'Escape') closeAll();
     });
   })();
+
+  // Keep the hero background video looping. Dawn's global pauseAllMedia()
+  // (called whenever ANY modal-dialog on the page opens or closes — including
+  // the film/photo lightboxes added elsewhere on this page) pauses every
+  // <video> on the page, this one included. Since autoplay only fires once on
+  // initial load, without this it stays frozen on whatever frame it was
+  // paused on. Resume it unless the tab itself is actually backgrounded.
+  (function () {
+    var heroVideo = document.querySelector('.fien-hero__video');
+    if (!heroVideo) return;
+
+    heroVideo.addEventListener('pause', function () {
+      if (document.visibilityState !== 'hidden') {
+        heroVideo.play().catch(function () {});
+      }
+    });
+  })();
 {% endjavascript %}
 
 {% schema %}
