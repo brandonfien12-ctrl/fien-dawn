@@ -42,46 +42,58 @@
               {{ block.shopify_attributes }}
             >
 
-              {%- comment -%} Playable media {%- endcomment -%}
+              {%- comment -%}
+                Playable media — Shopify-hosted video only.
+
+                video_tag renders Shopify's own <video> element, so the file is
+                picked/uploaded through the theme editor's video picker and
+                served from Shopify's CDN. No external embed is involved.
+
+                preload: 'none' is deliberate: with up to 24 films in the
+                carousel, preloading even metadata for every one costs a
+                request each on first paint. The poster still renders, so the
+                card looks identical until the visitor presses play.
+
+                The poster comes from the block's own image if the merchant set
+                one, otherwise from image_size, which uses the frame Shopify
+                generates when the video is uploaded.
+              {%- endcomment -%}
               <div class="ffc-card__media-wrap">
                 {%- if block.settings.video != blank -%}
-                  {{
-                    block.settings.video
-                    | video_tag:
-                      controls: true,
-                      playsinline: true,
-                      preload: 'metadata',
-                      class: 'ffc-card__media ffc-card__media--video',
-                      image_size: '800x'
-                  }}
-                {%- elsif block.settings.video_url != blank -%}
-                  {%- if block.settings.video_url.type == 'youtube' -%}
-                    <iframe
-                      class="ffc-card__media ffc-card__media--embed"
-                      src="https://www.youtube.com/embed/{{ block.settings.video_url.id }}"
-                      title="{{ block.settings.title | escape }}"
-                      loading="lazy"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
-                    ></iframe>
-                  {%- elsif block.settings.video_url.type == 'vimeo' -%}
-                    <iframe
-                      class="ffc-card__media ffc-card__media--embed"
-                      src="https://player.vimeo.com/video/{{ block.settings.video_url.id }}"
-                      title="{{ block.settings.title | escape }}"
-                      loading="lazy"
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      allowfullscreen
-                    ></iframe>
+                  {%- if block.settings.poster_image != blank -%}
+                    {%- assign film_poster = block.settings.poster_image | image_url: width: 1280 -%}
+                    {{
+                      block.settings.video
+                      | video_tag:
+                        controls: true,
+                        playsinline: true,
+                        preload: 'none',
+                        poster: film_poster,
+                        class: 'ffc-card__media ffc-card__media--video'
+                    }}
+                  {%- else -%}
+                    {{
+                      block.settings.video
+                      | video_tag:
+                        controls: true,
+                        playsinline: true,
+                        preload: 'none',
+                        class: 'ffc-card__media ffc-card__media--video',
+                        image_size: '1280x'
+                    }}
                   {%- endif -%}
-                {%- elsif block.settings.cover_image != blank -%}
+                {%- elsif block.settings.poster_image != blank -%}
+                  {%- comment -%}
+                    No film chosen yet — show the poster on its own so the
+                    slide is never empty while the merchant is still setting up.
+                  {%- endcomment -%}
                   {{
-                    block.settings.cover_image
-                    | image_url: width: 800
+                    block.settings.poster_image
+                    | image_url: width: 1280
                     | image_tag:
                       class: 'ffc-card__media ffc-card__media--image',
                       loading: 'lazy',
-                      widths: '400, 600, 800'
+                      widths: '400, 600, 800, 1280'
                   }}
                 {%- else -%}
                   <div class="ffc-card__media-placeholder" aria-hidden="true"></div>
@@ -254,10 +266,6 @@
     border: 0;
   }
 
-  .ffc-card__media--embed {
-    aspect-ratio: 16 / 9;
-  }
-
   .ffc-card__media-placeholder {
     width: 100%;
     height: 100%;
@@ -422,6 +430,9 @@
       var activeIndex = 0;
       var autoTimer   = null;
       var paused      = false;
+      // Set while a film is actually playing, so the 6s auto-advance does not
+      // slide the carousel out from under someone who is watching.
+      var videoPlaying = false;
 
       function updateHeight() {
         var activeCard = cards[activeIndex];
@@ -455,6 +466,14 @@
           card.style.pointerEvents  = hidden ? 'none' : (Math.abs(offset) <= 2 ? 'auto' : 'none');
           card.setAttribute('data-slot', String(offset));
           card.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+
+          // Only the centre film may play. Anything rotated away, faded out or
+          // fully hidden gets paused, so we never have several videos decoding
+          // at once off-screen.
+          if (offset !== 0) {
+            var offVideo = card.querySelector('video');
+            if (offVideo && !offVideo.paused) offVideo.pause();
+          }
         });
 
         dots.forEach(function (dot, i) {
@@ -478,7 +497,7 @@
       function startTimer() {
         if (autoTimer) clearInterval(autoTimer);
         autoTimer = setInterval(function () {
-          if (!paused) next();
+          if (!paused && !videoPlaying) next();
         }, AUTO_DELAY);
       }
 
@@ -503,6 +522,29 @@
           if (offset === -1) { e.preventDefault(); prev(); }
           if (Math.abs(offset) >= 2) e.preventDefault();
         });
+      });
+
+      // Film playback bookkeeping. Pressing play on the centre film holds the
+      // carousel still; pausing, finishing or navigating away releases it.
+      // Playing one film also stops any other that is somehow still running.
+      cards.forEach(function (card) {
+        var video = card.querySelector('video');
+        if (!video) return;
+
+        video.addEventListener('play', function () {
+          videoPlaying = true;
+          cards.forEach(function (other) {
+            if (other === card) return;
+            var otherVideo = other.querySelector('video');
+            if (otherVideo && !otherVideo.paused) otherVideo.pause();
+          });
+          // The poster is replaced by the first frame here, which can change
+          // the card's height on unusual aspect ratios.
+          updateHeight();
+        });
+
+        video.addEventListener('pause', function () { videoPlaying = false; });
+        video.addEventListener('ended', function () { videoPlaying = false; });
       });
 
       carouselEl.addEventListener('mouseenter', pause);
@@ -581,22 +623,14 @@
         {
           "type": "video",
           "id": "video",
-          "label": "Video (uploaded)",
-          "info": "Uploaded video takes priority over the URL below if both are set."
-        },
-        {
-          "type": "video_url",
-          "id": "video_url",
-          "accept": ["youtube", "vimeo"],
-          "label": "Video URL",
-          "placeholder": "https://www.youtube.com/watch?v=...",
-          "info": "Used if no video is uploaded above."
+          "label": "Film",
+          "info": "Select or upload a video. It is hosted by Shopify — no YouTube or Vimeo link needed."
         },
         {
           "type": "image_picker",
-          "id": "cover_image",
-          "label": "Cover image (fallback)",
-          "info": "Shown only if no video or video URL is set."
+          "id": "poster_image",
+          "label": "Poster image",
+          "info": "Optional. Shown before the film plays. Defaults to a frame from the video."
         },
         {
           "type": "text",
