@@ -21,6 +21,81 @@
         "video": "shopify://files/videos/Montage1080pm.mp4"
       }
     },
+    "fien_featured_films": {
+      "type": "fien-featured-films",
+      "blocks": {
+        "film_1": {
+          "type": "film",
+          "settings": { "title": "Into the grey" }
+        },
+        "film_2": {
+          "type": "film",
+          "settings": { "title": "Open range" }
+        },
+        "film_3": {
+          "type": "film",
+          "settings": { "title": "Meadow monarch" }
+        }
+      },
+      "block_order": ["film_1", "film_2", "film_3"],
+      "settings": {
+        "eyebrow": "Selected work",
+        "heading": "Films",
+        "subtitle": "Short films from the field — expeditions, process, and the stories behind the prints."
+      }
+    },
+    "fien_photo_collage": {
+      "type": "fien-photo-collage",
+      "blocks": {
+        "photo_1": {
+          "type": "photo",
+          "settings": { "size": "large" }
+        },
+        "photo_2": {
+          "type": "photo",
+          "settings": { "size": "standard" }
+        },
+        "photo_3": {
+          "type": "photo",
+          "settings": { "size": "tall" }
+        },
+        "photo_4": {
+          "type": "photo",
+          "settings": { "size": "standard" }
+        },
+        "photo_5": {
+          "type": "photo",
+          "settings": { "size": "wide" }
+        },
+        "photo_6": {
+          "type": "photo",
+          "settings": { "size": "standard" }
+        },
+        "photo_7": {
+          "type": "photo",
+          "settings": { "size": "standard" }
+        },
+        "photo_8": {
+          "type": "photo",
+          "settings": { "size": "tall" }
+        }
+      },
+      "block_order": [
+        "photo_1",
+        "photo_2",
+        "photo_3",
+        "photo_4",
+        "photo_5",
+        "photo_6",
+        "photo_7",
+        "photo_8"
+      ],
+      "settings": {
+        "eyebrow": "The full collection",
+        "heading": "Photography",
+        "subtitle": "A working archive of images from the field."
+      }
+    },
     "fien_anniversary_banner": {
       "type": "fien-anniversary-banner",
       "settings": {
@@ -31,14 +106,6 @@
         "subtitle": "All 10 prints available",
         "cta_label": "",
         "cta_url": ""
-      }
-    },
-    "fien_video": {
-      "type": "fien-video",
-      "settings": {
-        "eyebrow": "Behind the lens",
-        "heading": "The Vision",
-        "video_url": ""
       }
     },
     "fien_collection_text": {
@@ -58,8 +125,9 @@
   },
   "order": [
     "fien_hero",
+    "fien_featured_films",
+    "fien_photo_collage",
     "fien_anniversary_banner",
-    "fien_video",
     "fien_featured_prints",
     "fien_collection_text"
   ]

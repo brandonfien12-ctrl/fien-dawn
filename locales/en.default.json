@@ -279,6 +279,18 @@
     "portfolio_gallery": {
       "empty": "Add photos or videos in the theme editor."
     },
+    "fien_featured_films": {
+      "empty": "Add films in the theme editor.",
+      "prev": "Previous film",
+      "next": "Next film",
+      "carousel_label": "Featured films carousel",
+      "dots_label": "Go to film",
+      "go_to_slide": "Go to film {{ index }}"
+    },
+    "fien_photo_collage": {
+      "empty": "Add photos in the theme editor.",
+      "view_image": "View full image"
+    },
     "fien_nav": {
       "aria_label": "Main navigation",
       "mobile_menu_label": "Mobile navigation",
