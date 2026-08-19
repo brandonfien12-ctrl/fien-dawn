@@ -202,8 +202,11 @@
 
   /* ── 3D Stage ─────────────────────────────────────────────────────────── */
 
+  /* Perspective is scaled with the cards (was 1200px for a 460px card). Left
+     at 1200 while the cards grew 40%, the foreshortening on the angled side
+     cards would get noticeably harsher rather than just larger. */
   .ffc__stage {
-    perspective: 1200px;
+    perspective: 1680px;
     width: 100%;
     position: relative;
   }
@@ -226,7 +229,10 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: min(460px, 78vw);
+    /* 644px = 460 x 1.4. The 78vw cap is unchanged: below ~826px viewport the
+       card is already viewport-bound, so phones stay as they were — see the
+       note on SLOTS_MOBILE in the script below. */
+    width: min(644px, 78vw);
     background: var(--dark);
     border: 1px solid var(--border);
     overflow: hidden;
@@ -381,13 +387,22 @@
     var TRANSITION = '0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     var AUTO_DELAY = 6000;
 
+    // Desktop translations scaled 1.4x alongside the card width (340 -> 476,
+    // 560 -> 784, and the same on tz). These have to move with the card: left
+    // at their old values, a 40% wider card would overlap its neighbours
+    // instead of fanning out behind them. Rotation, scale and opacity are
+    // untouched, so the coverflow reads exactly as before, just larger.
     var SLOTS_DESKTOP = {
        0: { tx:   0, tz:    0, ry:   0, sc: 1.00, op: 1.0 },
-       1: { tx: 340, tz: -160, ry: -45, sc: 0.85, op: 0.6 },
-      '-1': { tx:-340, tz: -160, ry:  45, sc: 0.85, op: 0.6 },
-       2: { tx: 560, tz: -280, ry: -70, sc: 0.70, op: 0.3 },
-      '-2': { tx:-560, tz: -280, ry:  70, sc: 0.70, op: 0.3 }
+       1: { tx: 476, tz: -224, ry: -45, sc: 0.85, op: 0.6 },
+      '-1': { tx:-476, tz: -224, ry:  45, sc: 0.85, op: 0.6 },
+       2: { tx: 784, tz: -392, ry: -70, sc: 0.70, op: 0.3 },
+      '-2': { tx:-784, tz: -392, ry:  70, sc: 0.70, op: 0.3 }
     };
+    // Deliberately unchanged. On phones the card is already capped at 78vw, so
+    // it cannot grow 40% (that would be 109vw). Widening these offsets without
+    // a wider card would just push the neighbouring films off-screen and lose
+    // the coverflow peek that makes the carousel legible as one.
     var SLOTS_MOBILE = {
        0: { tx:   0, tz:    0, ry:   0, sc: 1.00, op: 1.0 },
        1: { tx: 210, tz:  -80, ry: -30, sc: 0.85, op: 0.6 },
