@@ -17,7 +17,7 @@
     <div class="fpg__grid">
       {%- for block in section.blocks -%}
         <div
-          class="fpg__cell fpg__cell--{{ block.settings.size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          class="fpg__cell{% if block.settings.feature %} fpg__cell--feature{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {% if settings.animations_reveal_on_scroll %}
             data-cascade
             style="--animation-order: {{ forloop.index }};"
@@ -145,12 +145,15 @@
     color: var(--muted);
   }
 
+  /* Pinterest-style masonry — every photo keeps its own natural aspect
+     ratio (no cropping). Portrait shots run tall, landscape shots run
+     short, and everything just packs around them automatically. Reorder,
+     add, or remove photos by dragging blocks in the theme editor sidebar;
+     the layout re-flows on its own. Check "Feature" on a block to break
+     it out full width. */
   .fpg__grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: 220px;
-    grid-auto-flow: dense;
-    gap: 4px;
+    column-count: 3;
+    column-gap: 4px;
     padding: 0 4px;
   }
 
@@ -158,27 +161,17 @@
     position: relative;
     overflow: hidden;
     background: var(--dark);
-    grid-column: span 2;
-    grid-row: span 1;
+    break-inside: avoid;
+    margin-bottom: 4px;
   }
 
-  .fpg__cell--wide {
-    grid-column: span 3;
-  }
-
-  .fpg__cell--tall {
-    grid-row: span 2;
-  }
-
-  .fpg__cell--large {
-    grid-column: span 4;
-    grid-row: span 2;
+  .fpg__cell--feature {
+    column-span: all;
   }
 
   .fpg__link {
     display: block;
     width: 100%;
-    height: 100%;
     padding: 0;
     border: none;
     background: none;
@@ -189,8 +182,7 @@
   .fpg__placeholder {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     transition: transform 0.7s ease;
   }
 
@@ -259,16 +251,7 @@
 
   @media screen and (max-width: 989px) {
     .fpg__grid {
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 200px;
-    }
-
-    .fpg__cell--large {
-      grid-column: span 4;
-    }
-
-    .fpg__cell--wide {
-      grid-column: span 4;
+      column-count: 2;
     }
   }
 
@@ -283,19 +266,13 @@
     }
 
     .fpg__grid {
-      grid-template-columns: 1fr;
-      grid-auto-rows: auto;
-      gap: 2px;
+      column-count: 1;
+      column-gap: 0;
       padding: 0 2px;
     }
 
-    .fpg__cell,
-    .fpg__cell--wide,
-    .fpg__cell--tall,
-    .fpg__cell--large {
-      grid-column: span 1;
-      grid-row: span 1;
-      aspect-ratio: 4 / 5;
+    .fpg__cell {
+      margin-bottom: 2px;
     }
 
     .fpg__caption {
@@ -343,16 +320,10 @@
           "label": "Image"
         },
         {
-          "type": "select",
-          "id": "size",
-          "label": "Tile size",
-          "options": [
-            { "value": "standard", "label": "Standard" },
-            { "value": "wide", "label": "Wide" },
-            { "value": "tall", "label": "Tall" },
-            { "value": "large", "label": "Large" }
-          ],
-          "default": "standard"
+          "type": "checkbox",
+          "id": "feature",
+          "label": "Feature (full width)",
+          "default": false
         },
         {
           "type": "text",
@@ -367,14 +338,14 @@
     {
       "name": "Photo collage",
       "blocks": [
-        { "type": "photo", "settings": { "size": "large" } },
-        { "type": "photo", "settings": { "size": "standard" } },
-        { "type": "photo", "settings": { "size": "tall" } },
-        { "type": "photo", "settings": { "size": "standard" } },
-        { "type": "photo", "settings": { "size": "wide" } },
-        { "type": "photo", "settings": { "size": "standard" } },
-        { "type": "photo", "settings": { "size": "standard" } },
-        { "type": "photo", "settings": { "size": "tall" } }
+        { "type": "photo", "settings": { "feature": true } },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" }
       ]
     }
   ]

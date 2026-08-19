@@ -52,35 +52,35 @@
       "blocks": {
         "photo_1": {
           "type": "photo",
-          "settings": { "size": "large" }
+          "settings": { "feature": true }
         },
         "photo_2": {
           "type": "photo",
-          "settings": { "size": "standard" }
+          "settings": {}
         },
         "photo_3": {
           "type": "photo",
-          "settings": { "size": "tall" }
+          "settings": {}
         },
         "photo_4": {
           "type": "photo",
-          "settings": { "size": "standard" }
+          "settings": {}
         },
         "photo_5": {
           "type": "photo",
-          "settings": { "size": "wide" }
+          "settings": {}
         },
         "photo_6": {
           "type": "photo",
-          "settings": { "size": "standard" }
+          "settings": {}
         },
         "photo_7": {
           "type": "photo",
-          "settings": { "size": "standard" }
+          "settings": {}
         },
         "photo_8": {
           "type": "photo",
-          "settings": { "size": "tall" }
+          "settings": {}
         }
       },
       "block_order": [
