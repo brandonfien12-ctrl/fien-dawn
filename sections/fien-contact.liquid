@@ -15,12 +15,21 @@
       </a>
 
       {%- if section.settings.signature_image != blank -%}
-        <img
-          src="{{ section.settings.signature_image }}"
-          alt="{{ 'sections.fien_contact.signature_alt' | t }}"
-          class="fcf__signature"
-          loading="lazy"
-        >
+        {%- comment -%}
+          image_url/image_tag rather than a bare <img src>: it serves the file
+          from the Shopify CDN with a srcset and emits intrinsic width/height,
+          which prevents layout shift as the signature loads.
+        {%- endcomment -%}
+        {%- assign signature_alt = 'sections.fien_contact.signature_alt' | t -%}
+        {{
+          section.settings.signature_image
+          | image_url: width: 800
+          | image_tag:
+            alt: signature_alt,
+            class: 'fcf__signature',
+            loading: 'lazy',
+            widths: '200, 300, 400, 600, 800'
+        }}
       {%- endif -%}
 
     </div>

@@ -20,7 +20,11 @@
         title="The Untold Stories"
       ></iframe>
     </div>
-    <script src="https://player.vimeo.com/api/player.js"></script>
+    {%- comment -%}
+      defer: the Vimeo player API must be loaded from Vimeo's own origin, but
+      nothing here calls it during parse, so it should not block rendering.
+    {%- endcomment -%}
+    <script src="https://player.vimeo.com/api/player.js" defer></script>
 
   </div>
 </section>

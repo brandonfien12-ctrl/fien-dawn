@@ -49,6 +49,7 @@
           <select
             class="fcol__sort-select"
             id="FcolSort-{{ section.id }}"
+            data-fcol-sort
             aria-label="{{ 'sections.fien_collection.sort_label' | t }}"
           >
             {%- for option in collection.sort_options -%}
@@ -681,11 +682,16 @@
 {% endstylesheet %}
 
 {% javascript %}
+  // Selects by [data-fcol-sort] rather than an interpolated section id.
+  // Liquid is never rendered inside a javascript tag, so the previous
+  // getElementById lookup searched for the un-interpolated placeholder text
+  // itself, always returned null, and the sort dropdown did nothing.
+  // querySelectorAll also keeps this correct if the section is rendered twice.
   (function () {
-    var select = document.getElementById('FcolSort-{{ section.id }}');
-    if (!select) return;
-    select.addEventListener('change', function () {
-      window.location = select.value;
+    document.querySelectorAll('[data-fcol-sort]').forEach(function (select) {
+      select.addEventListener('change', function () {
+        window.location = select.value;
+      });
     });
   })();
 {% endjavascript %}
