@@ -35,9 +35,15 @@
 
     <div class="fien-hero__cta">
       {%- if section.settings.portfolio_label != blank -%}
+        {%- comment -%}
+          Anchors down to the sections on THIS page (#fien-films, #fien-photography)
+          rather than the separate /pages/videography and /pages/photography —
+          the site's global `scroll-behavior: smooth` (layout/theme.liquid) makes
+          this glide rather than jump.
+        {%- endcomment -%}
         {%- liquid
-          assign hero_cta1_url = section.settings.cta1_url | default: '/pages/videography'
-          assign hero_cta2_url = section.settings.cta2_url | default: '/pages/photography'
+          assign hero_cta1_url = section.settings.cta1_url | default: '#fien-films'
+          assign hero_cta2_url = section.settings.cta2_url | default: '#fien-photography'
         -%}
         <div class="fien-hero__dropdown" data-fien-dropdown>
           <button
@@ -445,7 +451,7 @@
       "type": "url",
       "id": "cta1_url",
       "label": "Link 1 URL",
-      "info": "Defaults to /pages/videography if left blank"
+      "info": "Defaults to #fien-films (scrolls down to the Films section on this page) if left blank"
     },
     {
       "type": "text",
@@ -457,7 +463,7 @@
       "type": "url",
       "id": "cta2_url",
       "label": "Link 2 URL",
-      "info": "Defaults to /pages/photography if left blank"
+      "info": "Defaults to #fien-photography (scrolls down to the Photography section on this page) if left blank"
     },
     {
       "type": "video",

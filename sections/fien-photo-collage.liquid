@@ -1,7 +1,7 @@
 {{ 'component-modal-video.css' | asset_url | stylesheet_tag }}
 
-<section class="fpg" id="fpg-{{ section.id }}">
-  <div class="fpg__header page-width">
+<section class="fpg" id="fien-photography">
+  <div class="fpg__header">
     {%- if section.settings.eyebrow != blank -%}
       <p class="fpg__eyebrow">{{- section.settings.eyebrow -}}</p>
     {%- endif -%}
@@ -100,15 +100,13 @@
     padding: 120px 0;
   }
 
+  /* Matches .ffc__header in fien-featured-films.liquid exactly, so the
+     "Films" and "Photography" section intros on the homepage read as one
+     consistent system rather than two different styles. */
   .fpg__header {
-    max-width: 760px;
-    margin: 0 auto 56px;
+    margin-bottom: 64px;
+    max-width: 700px;
     padding: 0 60px;
-    text-align: center;
-  }
-
-  .fpg__header.page-width {
-    max-width: 760px;
   }
 
   .fpg__eyebrow {
@@ -118,26 +116,26 @@
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--gold);
-    margin: 0 0 20px;
+    margin: 0 0 16px;
   }
 
   .fpg__heading {
     font-family: var(--font-display);
-    font-size: clamp(40px, 6vw, 72px);
-    line-height: 0.95;
-    letter-spacing: 0.04em;
+    font-size: clamp(40px, 5vw, 64px);
+    letter-spacing: 0.06em;
+    line-height: 1;
     color: var(--white);
-    margin: 0;
+    margin: 0 0 24px;
   }
 
   .fpg__subtitle {
     font-family: var(--font-serif);
+    font-size: 18px;
     font-style: italic;
-    font-size: clamp(15px, 1.4vw, 19px);
+    font-weight: 300;
     color: var(--muted);
-    margin: 20px auto 0;
-    line-height: 1.7;
-    max-width: 520px;
+    line-height: 1.8;
+    margin: 0;
   }
 
   .fpg__empty {
@@ -281,7 +279,7 @@
 
     .fpg__header {
       padding: 0 24px;
-      margin-bottom: 40px;
+      margin-bottom: 48px;
     }
 
     .fpg__grid {
