@@ -431,6 +431,12 @@
     }
 
     function init(carouselEl) {
+      // The theme editor re-renders this section every time a film block is
+      // added, removed or reordered, so init runs again on the fresh markup.
+      // Bail if we already wired up this exact element.
+      if (carouselEl.hasAttribute('data-ffc-ready')) return;
+      carouselEl.setAttribute('data-ffc-ready', '');
+
       var cards     = Array.prototype.slice.call(carouselEl.querySelectorAll('.ffc-card'));
       var dots      = Array.prototype.slice.call(
         carouselEl.closest('.ffc').querySelectorAll('.ffc__dot')
@@ -449,13 +455,23 @@
       // slide the carousel out from under someone who is watching.
       var videoPlaying = false;
 
-      function updateHeight() {
+      function updateHeight(retriesLeft) {
         var activeCard = cards[activeIndex];
         if (!activeCard) return;
         var h = activeCard.offsetHeight;
         if (h > 0) {
           track.style.height = h + 'px';
           stage.style.height = h + 'px';
+          return;
+        }
+        // The cards are absolutely positioned, so the track only has a height
+        // because we set one here. If we measure 0 — which happens when the
+        // editor re-renders the section before the media has been laid out —
+        // the whole carousel would collapse to nothing. Retry on the next few
+        // frames rather than leaving it flattened.
+        var remaining = typeof retriesLeft === 'number' ? retriesLeft : 10;
+        if (remaining > 0) {
+          requestAnimationFrame(function () { updateHeight(remaining - 1); });
         }
       }
 
@@ -586,24 +602,96 @@
         if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
       });
 
-      window.addEventListener('resize', function () {
+      function onResize() {
         render(true);
         requestAnimationFrame(function () {
           render(false);
         });
-      });
+      }
+      window.addEventListener('resize', onResize);
 
       render(true);
       startTimer();
 
+      // Re-measure once the active card's media actually arrives, otherwise the
+      // track can keep the height of a not-yet-loaded image.
       var activeMedia = cards[activeIndex] && cards[activeIndex].querySelector('img, video');
-      if (activeMedia && activeMedia.tagName === 'IMG' && !activeMedia.complete) {
-        activeMedia.addEventListener('load', function () { updateHeight(); }, { once: true });
+      if (activeMedia) {
+        if (activeMedia.tagName === 'IMG' && !activeMedia.complete) {
+          activeMedia.addEventListener('load', function () { updateHeight(); }, { once: true });
+        } else if (activeMedia.tagName === 'VIDEO') {
+          activeMedia.addEventListener('loadedmetadata', function () { updateHeight(); }, { once: true });
+        }
+      }
+
+      // Handed to the theme-editor hooks below so they can drive this instance
+      // without re-running init or leaking its timer and resize listener.
+      carouselEl.ffc = {
+        goTo: goTo,
+        pause: pause,
+        resume: resume,
+        refresh: function () { render(true); updateHeight(); },
+        destroy: function () {
+          if (autoTimer) clearInterval(autoTimer);
+          autoTimer = null;
+          window.removeEventListener('resize', onResize);
+          carouselEl.removeAttribute('data-ffc-ready');
+        }
+      };
+    }
+
+    function initAll(root) {
+      var scope = root && root.querySelectorAll ? root : document;
+      var found = scope.querySelectorAll('.ffc__carousel');
+      Array.prototype.forEach.call(found, function (el) { init(el); });
+      // shopify:section:load hands us the section wrapper itself, which may be
+      // the carousel's ancestor but is not guaranteed to contain it via
+      // querySelectorAll if the carousel *is* the target.
+      if (scope !== document && scope.classList && scope.classList.contains('ffc__carousel')) {
+        init(scope);
       }
     }
 
-    var carousels = document.querySelectorAll('.ffc__carousel');
-    carousels.forEach(function (el) { init(el); });
+    initAll(document);
+
+    // ── Theme editor lifecycle ──────────────────────────────────────────────
+    // Adding, removing or reordering a film re-renders the section through the
+    // Section Rendering API. Without these hooks the new markup never gets
+    // initialised: the cards stay absolutely positioned with no transforms and
+    // the track has no height, so the carousel looks like it vanished and the
+    // films pile up on top of each other.
+
+    document.addEventListener('shopify:section:load', function (event) {
+      initAll(event.target);
+    });
+
+    document.addEventListener('shopify:section:unload', function (event) {
+      var gone = event.target.querySelectorAll ? event.target.querySelectorAll('.ffc__carousel') : [];
+      Array.prototype.forEach.call(gone, function (el) {
+        if (el.ffc) el.ffc.destroy();
+      });
+    });
+
+    // Selecting a film in the sidebar should bring that film to the front and
+    // hold it there while it is being edited.
+    document.addEventListener('shopify:block:select', function (event) {
+      var card = event.target.closest ? event.target.closest('.ffc-card') : null;
+      if (!card) return;
+      var carouselEl = card.closest('.ffc__carousel');
+      if (!carouselEl) return;
+      init(carouselEl);
+      if (!carouselEl.ffc) return;
+      var index = parseInt(card.getAttribute('data-index'), 10);
+      if (!isNaN(index)) carouselEl.ffc.goTo(index);
+      carouselEl.ffc.pause();
+    });
+
+    document.addEventListener('shopify:block:deselect', function (event) {
+      var card = event.target.closest ? event.target.closest('.ffc-card') : null;
+      if (!card) return;
+      var carouselEl = card.closest('.ffc__carousel');
+      if (carouselEl && carouselEl.ffc) carouselEl.ffc.resume();
+    });
   })();
 {% endjavascript %}
 
