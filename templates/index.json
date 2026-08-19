@@ -16,8 +16,11 @@
         "heading_line_1": "The untold",
         "heading_line_2": "Stories.",
         "subtitle": "They say a picture is worth a thousand words - but what if the most powerful ones were never spoken at all?",
-        "cta_primary_label": "View prints",
-        "cta_primary_url": "",
+        "portfolio_label": "View the portfolio",
+        "cta1_label": "Films",
+        "cta1_url": "",
+        "cta2_label": "Photography",
+        "cta2_url": "",
         "video": "shopify://files/videos/Montage1080pm.mp4"
       }
     },
@@ -111,16 +114,6 @@
     "fien_collection_text": {
       "type": "fien-collection-text",
       "settings": {}
-    },
-    "fien_featured_prints": {
-      "type": "fien-featured-prints",
-      "settings": {
-        "eyebrow": "The collection",
-        "heading": "The Untold Stories",
-        "subtitle": "Each image is produced in a limited edition. Printed to order.",
-        "collection": "",
-        "products_to_show": 10
-      }
     }
   },
   "order": [
@@ -128,7 +121,6 @@
     "fien_featured_films",
     "fien_photo_collage",
     "fien_anniversary_banner",
-    "fien_featured_prints",
     "fien_collection_text"
   ]
 }

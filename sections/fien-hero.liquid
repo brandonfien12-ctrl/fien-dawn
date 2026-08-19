@@ -34,13 +34,32 @@
     </p>
 
     <div class="fien-hero__cta">
-      {%- if section.settings.cta_primary_label != blank -%}
-        <a
-          href="{{ section.settings.cta_primary_url | default: '#fien-collection' }}"
-          class="fien-btn fien-btn--primary"
-        >
-          {{- section.settings.cta_primary_label -}}
-        </a>
+      {%- if section.settings.portfolio_label != blank -%}
+        {%- liquid
+          assign hero_cta1_url = section.settings.cta1_url | default: '/pages/videography'
+          assign hero_cta2_url = section.settings.cta2_url | default: '/pages/photography'
+        -%}
+        <div class="fien-hero__dropdown" data-fien-dropdown>
+          <button
+            type="button"
+            class="fien-btn fien-btn--primary fien-hero__dropdown-toggle"
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-fien-dropdown-toggle
+          >
+            {{- section.settings.portfolio_label -}}
+            <span class="fien-hero__caret" aria-hidden="true"></span>
+          </button>
+          <ul class="fien-hero__submenu" role="list">
+            {% render 'fien-portfolio-links',
+              item_class: 'fien-hero__submenu-link',
+              l1_label: section.settings.cta1_label,
+              l1_url: hero_cta1_url,
+              l2_label: section.settings.cta2_label,
+              l2_url: hero_cta2_url
+            %}
+          </ul>
+        </div>
       {%- endif -%}
 
     </div>
@@ -181,6 +200,91 @@
     transform: translateY(-2px);
   }
 
+  /* "View the portfolio" dropdown — hover / keyboard focus opens it via CSS;
+     JS below adds click/tap toggle plus outside-click and Escape to close. */
+  .fien-hero__dropdown {
+    position: relative;
+  }
+
+  .fien-hero__dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border: 1px solid var(--gold);
+  }
+
+  .fien-hero__caret {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+    margin-top: -3px;
+  }
+
+  .fien-hero__dropdown:hover .fien-hero__caret,
+  .fien-hero__dropdown:focus-within .fien-hero__caret,
+  .fien-hero__dropdown.is-open .fien-hero__caret {
+    transform: rotate(-135deg);
+    margin-top: 2px;
+  }
+
+  .fien-hero__submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 14px 0 0;
+    padding: 8px 0;
+    min-width: 220px;
+    list-style: none;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    transform: translateY(-6px);
+    z-index: 50;
+  }
+
+  /* Invisible bridge so the pointer can cross the gap without closing */
+  .fien-hero__submenu::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 0;
+    right: 0;
+    height: 14px;
+  }
+
+  .fien-hero__dropdown:hover .fien-hero__submenu,
+  .fien-hero__dropdown:focus-within .fien-hero__submenu,
+  .fien-hero__dropdown.is-open .fien-hero__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .fien-hero__submenu-link {
+    display: block;
+    padding: 12px 28px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  .fien-hero__submenu-link:hover {
+    color: var(--gold);
+    background: var(--mid);
+  }
+
   /* Scroll indicator */
   .fien-hero__scroll {
     position: absolute;
@@ -249,6 +353,47 @@
   }
 {% endstylesheet %}
 
+{% javascript %}
+  // "View the portfolio" dropdown. Hover / keyboard focus opens it via CSS;
+  // this adds click-and-tap toggle plus outside-click and Escape to close.
+  (function () {
+    var dropdowns = document.querySelectorAll('.fien-hero [data-fien-dropdown]');
+    if (!dropdowns.length) return;
+
+    function closeAll() {
+      dropdowns.forEach(function (dd) {
+        dd.classList.remove('is-open');
+        var t = dd.querySelector('[data-fien-dropdown-toggle]');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    dropdowns.forEach(function (dd) {
+      var toggle = dd.querySelector('[data-fien-dropdown-toggle]');
+      if (!toggle) return;
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        var isOpen = dd.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      dropdowns.forEach(function (dd) {
+        if (!dd.contains(event.target)) {
+          dd.classList.remove('is-open');
+          var t = dd.querySelector('[data-fien-dropdown-toggle]');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeAll();
+    });
+  })();
+{% endjavascript %}
+
 {% schema %}
 {
   "name": "Fien hero",
@@ -278,16 +423,38 @@
       "default": "They say a picture is worth a thousand words — but what if the most powerful ones were never spoken at all?"
     },
     {
+      "type": "header",
+      "content": "Portfolio dropdown"
+    },
+    {
       "type": "text",
-      "id": "cta_primary_label",
-      "label": "Primary button label",
-      "default": "View prints"
+      "id": "portfolio_label",
+      "label": "Dropdown button label",
+      "default": "View the portfolio"
+    },
+    {
+      "type": "text",
+      "id": "cta1_label",
+      "label": "Link 1 label",
+      "default": "Films"
     },
     {
       "type": "url",
-      "id": "cta_primary_url",
-      "label": "Primary button URL",
-      "info": "Leave blank to scroll to the prints carousel"
+      "id": "cta1_url",
+      "label": "Link 1 URL",
+      "info": "Defaults to /pages/videography if left blank"
+    },
+    {
+      "type": "text",
+      "id": "cta2_label",
+      "label": "Link 2 label",
+      "default": "Photography"
+    },
+    {
+      "type": "url",
+      "id": "cta2_url",
+      "label": "Link 2 URL",
+      "info": "Defaults to /pages/photography if left blank"
     },
     {
       "type": "video",
