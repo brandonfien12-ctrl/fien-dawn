@@ -231,11 +231,14 @@
     margin-top: 2px;
   }
 
+  /* Opens upward, not downward — the hero button sits near the bottom of a
+     100vh section with overflow:hidden (needed to clip the background
+     video), so a downward menu gets clipped before it's fully visible. */
   .fien-hero__submenu {
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 0;
-    margin: 14px 0 0;
+    margin: 0 0 14px;
     padding: 8px 0;
     min-width: 220px;
     list-style: none;
@@ -244,7 +247,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-    transform: translateY(-6px);
+    transform: translateY(6px);
     z-index: 50;
   }
 
@@ -252,7 +255,7 @@
   .fien-hero__submenu::before {
     content: '';
     position: absolute;
-    top: -14px;
+    bottom: -14px;
     left: 0;
     right: 0;
     height: 14px;
