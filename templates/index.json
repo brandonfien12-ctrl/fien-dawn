@@ -12,9 +12,9 @@
     "fien_hero": {
       "type": "fien-hero",
       "settings": {
-        "eyebrow": "Outdoor & wildlife photography",
-        "heading_line_1": "The untold",
-        "heading_line_2": "Stories.",
+        "eyebrow": "cinematic storytelling",
+        "heading_line_1": "fien",
+        "heading_line_2": "studios",
         "subtitle": "They say a picture is worth a thousand words - but what if the most powerful ones were never spoken at all?",
         "portfolio_label": "View the portfolio",
         "cta1_label": "Films",
@@ -42,7 +42,8 @@
         "film_3": {
           "type": "film",
           "settings": {
-            "title": "Meadow monarch"
+            "video": "shopify://files/videos/Argentina2026Fien1080p.mp4",
+            "title": "The Southern Hemisphere"
           }
         }
       },
