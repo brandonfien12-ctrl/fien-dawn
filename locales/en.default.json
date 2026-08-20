@@ -287,6 +287,14 @@
       "dots_label": "Go to film",
       "go_to_slide": "Go to film {{ index }}"
     },
+    "fien_publications": {
+      "empty": "Add publications in the theme editor.",
+      "prev": "Previous publications",
+      "next": "Next publications",
+      "carousel_label": "Publications carousel",
+      "dots_label": "Go to publications",
+      "go_to_page": "Go to publications page {{ index }}"
+    },
     "fien_photo_collage": {
       "empty": "Add photos in the theme editor.",
       "view_image": "View full image"

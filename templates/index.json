@@ -47,6 +47,33 @@
         "subtitle": "Short films from the field — expeditions, process, and the stories behind the prints."
       }
     },
+    "fien_publications": {
+      "type": "fien-publications",
+      "blocks": {
+        "publication_1": { "type": "publication", "settings": {} },
+        "publication_2": { "type": "publication", "settings": {} },
+        "publication_3": { "type": "publication", "settings": {} },
+        "publication_4": { "type": "publication", "settings": {} },
+        "publication_5": { "type": "publication", "settings": {} },
+        "publication_6": { "type": "publication", "settings": {} }
+      },
+      "block_order": [
+        "publication_1",
+        "publication_2",
+        "publication_3",
+        "publication_4",
+        "publication_5",
+        "publication_6"
+      ],
+      "settings": {
+        "eyebrow": "In print",
+        "heading": "Publications",
+        "subtitle": "Covers shot for magazines and journals in the field.",
+        "gap": 32,
+        "cover_scale": 86,
+        "cover_ratio": "3 / 4"
+      }
+    },
     "fien_photo_collage": {
       "type": "fien-photo-collage",
       "blocks": {
@@ -119,6 +146,7 @@
   "order": [
     "fien_hero",
     "fien_featured_films",
+    "fien_publications",
     "fien_photo_collage",
     "fien_anniversary_banner",
     "fien_collection_text"
