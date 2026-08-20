@@ -29,18 +29,28 @@
       "blocks": {
         "film_1": {
           "type": "film",
-          "settings": { "title": "Into the grey" }
+          "settings": {
+            "title": "Into the grey"
+          }
         },
         "film_2": {
           "type": "film",
-          "settings": { "title": "Open range" }
+          "settings": {
+            "title": "Open range"
+          }
         },
         "film_3": {
           "type": "film",
-          "settings": { "title": "Meadow monarch" }
+          "settings": {
+            "title": "Meadow monarch"
+          }
         }
       },
-      "block_order": ["film_1", "film_2", "film_3"],
+      "block_order": [
+        "film_1",
+        "film_2",
+        "film_3"
+      ],
       "settings": {
         "eyebrow": "Selected work",
         "heading": "Films",
@@ -50,41 +60,60 @@
     "fien_photo_collage": {
       "type": "fien-photo-collage",
       "blocks": {
-        "photo_1": {
-          "type": "photo",
-          "settings": { "feature": true }
-        },
         "photo_2": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/7H5A0970_copy.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_3": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_4": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/7H5A8887.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_5": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/7H5A8887.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_6": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_7": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_8": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "feature": false,
+            "caption": ""
+          }
         }
       },
       "block_order": [
-        "photo_1",
         "photo_2",
         "photo_3",
         "photo_4",
