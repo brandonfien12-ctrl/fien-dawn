@@ -30,7 +30,8 @@
         "film_1": {
           "type": "film",
           "settings": {
-            "title": "Into the grey"
+            "video": "shopify://files/videos/Montage1080pm.mp4",
+            "title": "Hero"
           }
         },
         "film_2": {
