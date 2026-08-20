@@ -55,7 +55,7 @@
       "settings": {
         "eyebrow": "Selected work",
         "heading": "Films",
-        "subtitle": "Short films from the field — expeditions, process, and the stories behind the prints."
+        "subtitle": ""
       }
     },
     "fien_photo_collage": {
@@ -101,6 +101,14 @@
             "caption": ""
           }
         },
+        "photo_bRgQCd": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A5494.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
         "photo_7": {
           "type": "photo",
           "settings": {
@@ -124,13 +132,14 @@
         "photo_4",
         "photo_5",
         "photo_6",
+        "photo_bRgQCd",
         "photo_7",
         "photo_8"
       ],
       "settings": {
-        "eyebrow": "The full collection",
-        "heading": "Photography",
-        "subtitle": "A working archive of images from the field."
+        "eyebrow": "The collection",
+        "heading": "STill Photography",
+        "subtitle": ""
       }
     },
     "fien_anniversary_banner": {
