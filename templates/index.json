@@ -43,7 +43,7 @@
           "type": "film",
           "settings": {
             "video": "shopify://files/videos/Argentina2026Fien1080p.mp4",
-            "title": "The Southern Hemisphere"
+            "title": "Argentina"
           }
         }
       },
@@ -72,6 +72,7 @@
         "photo_3": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/C93I0107.jpg",
             "feature": false,
             "caption": ""
           }
@@ -87,7 +88,7 @@
         "photo_5": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/7H5A8887.jpg",
+            "image": "shopify://shop_images/7H5A8539.jpg",
             "feature": false,
             "caption": ""
           }
@@ -95,6 +96,7 @@
         "photo_6": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/C93I0612.jpg",
             "feature": false,
             "caption": ""
           }
@@ -102,6 +104,7 @@
         "photo_7": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/C93I1146.jpg",
             "feature": false,
             "caption": ""
           }
@@ -109,6 +112,7 @@
         "photo_8": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/7H5A0904.jpg",
             "feature": false,
             "caption": ""
           }
@@ -140,17 +144,12 @@
         "cta_label": "",
         "cta_url": ""
       }
-    },
-    "fien_collection_text": {
-      "type": "fien-collection-text",
-      "settings": {}
     }
   },
   "order": [
     "fien_hero",
     "fien_featured_films",
     "fien_photo_collage",
-    "fien_anniversary_banner",
-    "fien_collection_text"
+    "fien_anniversary_banner"
   ]
 }
