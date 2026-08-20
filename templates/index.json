@@ -61,12 +61,60 @@
     "fien_publications": {
       "type": "fien-publications",
       "blocks": {
-        "publication_1": { "type": "publication", "settings": {} },
-        "publication_2": { "type": "publication", "settings": {} },
-        "publication_3": { "type": "publication", "settings": {} },
-        "publication_4": { "type": "publication", "settings": {} },
-        "publication_5": { "type": "publication", "settings": {} },
-        "publication_6": { "type": "publication", "settings": {} }
+        "publication_1": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3861_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_2": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3862_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_3": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3860_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_4": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3855_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_5": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3856_cover_1.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_6": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3857_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        }
       },
       "block_order": [
         "publication_1",
