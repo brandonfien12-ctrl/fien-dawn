@@ -12,9 +12,9 @@
     "fien_hero": {
       "type": "fien-hero",
       "settings": {
-        "eyebrow": "Outdoor & wildlife photography",
-        "heading_line_1": "The untold",
-        "heading_line_2": "Stories.",
+        "eyebrow": "cinematic storytelling",
+        "heading_line_1": "fien",
+        "heading_line_2": "studios",
         "subtitle": "They say a picture is worth a thousand words - but what if the most powerful ones were never spoken at all?",
         "portfolio_label": "View the portfolio",
         "cta1_label": "Films",
@@ -29,22 +29,33 @@
       "blocks": {
         "film_1": {
           "type": "film",
-          "settings": { "title": "Into the grey" }
+          "settings": {
+            "title": "Into the grey"
+          }
         },
         "film_2": {
           "type": "film",
-          "settings": { "title": "Open range" }
+          "settings": {
+            "title": "Open range"
+          }
         },
         "film_3": {
           "type": "film",
-          "settings": { "title": "Meadow monarch" }
+          "settings": {
+            "video": "shopify://files/videos/Argentina2026Fien1080p.mp4",
+            "title": "Argentina"
+          }
         }
       },
-      "block_order": ["film_1", "film_2", "film_3"],
+      "block_order": [
+        "film_1",
+        "film_2",
+        "film_3"
+      ],
       "settings": {
         "eyebrow": "Selected work",
         "heading": "Films",
-        "subtitle": "Short films from the field — expeditions, process, and the stories behind the prints."
+        "subtitle": ""
       }
     },
     "fien_publications": {
@@ -77,53 +88,85 @@
     "fien_photo_collage": {
       "type": "fien-photo-collage",
       "blocks": {
-        "photo_1": {
-          "type": "photo",
-          "settings": { "feature": true }
-        },
         "photo_2": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/7H5A0970_copy.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_3": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/C93I0107.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_4": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/7H5A8887.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_5": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/7H5A8539.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_6": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/C93I0612.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_bRgQCd": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A5494.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_7": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/C93I1146.jpg",
+            "feature": false,
+            "caption": ""
+          }
         },
         "photo_8": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/7H5A0904.jpg",
+            "feature": false,
+            "caption": ""
+          }
         }
       },
       "block_order": [
-        "photo_1",
         "photo_2",
         "photo_3",
         "photo_4",
         "photo_5",
         "photo_6",
+        "photo_bRgQCd",
         "photo_7",
         "photo_8"
       ],
       "settings": {
-        "eyebrow": "The full collection",
-        "heading": "Photography",
-        "subtitle": "A working archive of images from the field."
+        "eyebrow": "The collection",
+        "heading": "STill Photography",
+        "subtitle": ""
       }
     },
     "fien_anniversary_banner": {
@@ -137,10 +180,6 @@
         "cta_label": "",
         "cta_url": ""
       }
-    },
-    "fien_collection_text": {
-      "type": "fien-collection-text",
-      "settings": {}
     }
   },
   "order": [
@@ -148,7 +187,6 @@
     "fien_featured_films",
     "fien_publications",
     "fien_photo_collage",
-    "fien_anniversary_banner",
-    "fien_collection_text"
+    "fien_anniversary_banner"
   ]
 }
