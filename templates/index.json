@@ -31,26 +31,21 @@
           "type": "film",
           "settings": {
             "video": "shopify://files/videos/Montage1080pm.mp4",
-            "title": "Hero"
-          }
-        },
-        "film_2": {
-          "type": "film",
-          "settings": {
-            "title": "Open range"
+            "poster_image": "shopify://shop_images/80b2aef0-6555-4054-80dc-58df07a5a29e.png",
+            "title": "The Studio"
           }
         },
         "film_3": {
           "type": "film",
           "settings": {
             "video": "shopify://files/videos/Argentina2026Fien1080p.mp4",
+            "poster_image": "shopify://shop_images/Screenshot_2026-08-21_at_3.32.41_PM.png",
             "title": "Argentina"
           }
         }
       },
       "block_order": [
         "film_1",
-        "film_2",
         "film_3"
       ],
       "settings": {
@@ -62,6 +57,15 @@
     "fien_publications": {
       "type": "fien-publications",
       "blocks": {
+        "publication_nUkrpW": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3858_cover_2.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
         "publication_1": {
           "type": "publication",
           "settings": {
@@ -118,6 +122,7 @@
         }
       },
       "block_order": [
+        "publication_nUkrpW",
         "publication_1",
         "publication_2",
         "publication_3",
@@ -137,6 +142,30 @@
     "fien_photo_collage": {
       "type": "fien-photo-collage",
       "blocks": {
+        "photo_pAgHtC": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A7349.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_RwE9EV": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/C93I1197-4.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_gD69DU": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A5526.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
         "photo_2": {
           "type": "photo",
           "settings": {
@@ -203,6 +232,9 @@
         }
       },
       "block_order": [
+        "photo_pAgHtC",
+        "photo_RwE9EV",
+        "photo_gD69DU",
         "photo_2",
         "photo_3",
         "photo_4",
