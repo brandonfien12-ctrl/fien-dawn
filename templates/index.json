@@ -164,8 +164,8 @@
         "eyebrow": "In print",
         "heading": "Publications",
         "subtitle": "Covers shot for magazines and journals in the field.",
-        "gap": 32,
-        "cover_scale": 86,
+        "gap": 8,
+        "cover_scale": 100,
         "cover_ratio": "3 / 4"
       }
     },
