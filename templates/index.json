@@ -57,10 +57,19 @@
     "fien_publications": {
       "type": "fien-publications",
       "blocks": {
-        "publication_nUkrpW": {
+        "publication_Q7dpqT": {
           "type": "publication",
           "settings": {
-            "image": "shopify://shop_images/IMG_3858_cover_2.png",
+            "image": "shopify://shop_images/WildfowlCover1.jpg",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_bGKqBk": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/WildfowlCover2.jpg",
             "title": "",
             "issue": "",
             "url": ""
@@ -70,6 +79,24 @@
           "type": "publication",
           "settings": {
             "image": "shopify://shop_images/IMG_3861_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_Tj4XgN": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/pastedImage.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_nUkrpW": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3858_cover_2.png",
             "title": "",
             "issue": "",
             "url": ""
@@ -122,8 +149,11 @@
         }
       },
       "block_order": [
-        "publication_nUkrpW",
+        "publication_Q7dpqT",
+        "publication_bGKqBk",
         "publication_1",
+        "publication_Tj4XgN",
+        "publication_nUkrpW",
         "publication_2",
         "publication_3",
         "publication_4",
