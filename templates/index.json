@@ -30,26 +30,22 @@
         "film_1": {
           "type": "film",
           "settings": {
-            "title": "Into the grey"
-          }
-        },
-        "film_2": {
-          "type": "film",
-          "settings": {
-            "title": "Open range"
+            "video": "shopify://files/videos/Montage1080pm.mp4",
+            "poster_image": "shopify://shop_images/80b2aef0-6555-4054-80dc-58df07a5a29e.png",
+            "title": "The Studio"
           }
         },
         "film_3": {
           "type": "film",
           "settings": {
             "video": "shopify://files/videos/Argentina2026Fien1080p.mp4",
+            "poster_image": "shopify://shop_images/Screenshot_2026-08-21_at_3.32.41_PM.png",
             "title": "Argentina"
           }
         }
       },
       "block_order": [
         "film_1",
-        "film_2",
         "film_3"
       ],
       "settings": {
@@ -61,15 +57,103 @@
     "fien_publications": {
       "type": "fien-publications",
       "blocks": {
-        "publication_1": { "type": "publication", "settings": {} },
-        "publication_2": { "type": "publication", "settings": {} },
-        "publication_3": { "type": "publication", "settings": {} },
-        "publication_4": { "type": "publication", "settings": {} },
-        "publication_5": { "type": "publication", "settings": {} },
-        "publication_6": { "type": "publication", "settings": {} }
+        "publication_Q7dpqT": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/WildfowlCover1.jpg",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_bGKqBk": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/WildfowlCover2.jpg",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_1": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3861_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_Tj4XgN": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/pastedImage.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_nUkrpW": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3858_cover_2.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_2": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3862_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_3": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3860_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_4": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3855_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_5": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3856_cover_1.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        },
+        "publication_6": {
+          "type": "publication",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3857_cover.png",
+            "title": "",
+            "issue": "",
+            "url": ""
+          }
+        }
       },
       "block_order": [
+        "publication_Q7dpqT",
+        "publication_bGKqBk",
         "publication_1",
+        "publication_Tj4XgN",
+        "publication_nUkrpW",
         "publication_2",
         "publication_3",
         "publication_4",
@@ -88,10 +172,154 @@
     "fien_photo_collage": {
       "type": "fien-photo-collage",
       "blocks": {
+        "photo_RBrkHw": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A1053_c8ac8558-97ce-4a6d-a45f-9be787044e49.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_iMfW6p": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A9170.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_xU4LzG": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/557A4837_copy_9eb5ecb2-5535-4288-aa11-90e80548e470.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_E7chLa": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A3458.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_GPFxbd": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A9160-2.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_GW6yQi": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A9787-2.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_M9RFTG": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/DJI_0328.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_h7GU86": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A5508.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_WgwRkd": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A1542-2_copy.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_V6aRD3": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A2996.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_7cnxja": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A2606.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_WgPNDJ": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A2518_copy.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_QMcejq": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/DJI_0562.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_JP9RMA": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A8312.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_zhbWEt": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A6106.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_rjX4wW": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/pointoview.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_9dVGEQ": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A3592-Enhanced-NR-2.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_YfG7Gz": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A5365.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
         "photo_2": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/7H5A0970_copy.jpg",
+            "image": "shopify://shop_images/WVC_9326-Enhanced-NR.jpg",
             "feature": false,
             "caption": ""
           }
@@ -112,10 +340,26 @@
             "caption": ""
           }
         },
+        "photo_RwE9EV": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/557A6648_copy_preview.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
         "photo_5": {
           "type": "photo",
           "settings": {
             "image": "shopify://shop_images/7H5A8539.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_pAgHtC": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A7349.jpg",
             "feature": false,
             "caption": ""
           }
@@ -154,10 +398,30 @@
         }
       },
       "block_order": [
+        "photo_RBrkHw",
+        "photo_iMfW6p",
+        "photo_xU4LzG",
+        "photo_E7chLa",
+        "photo_GPFxbd",
+        "photo_GW6yQi",
+        "photo_M9RFTG",
+        "photo_h7GU86",
+        "photo_WgwRkd",
+        "photo_V6aRD3",
+        "photo_7cnxja",
+        "photo_WgPNDJ",
+        "photo_QMcejq",
+        "photo_JP9RMA",
+        "photo_zhbWEt",
+        "photo_rjX4wW",
+        "photo_9dVGEQ",
+        "photo_YfG7Gz",
         "photo_2",
         "photo_3",
         "photo_4",
+        "photo_RwE9EV",
         "photo_5",
+        "photo_pAgHtC",
         "photo_6",
         "photo_bRgQCd",
         "photo_7",
@@ -165,7 +429,7 @@
       ],
       "settings": {
         "eyebrow": "The collection",
-        "heading": "STill Photography",
+        "heading": "ARTIST SELECTS",
         "subtitle": ""
       }
     },
