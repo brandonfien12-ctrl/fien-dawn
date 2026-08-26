@@ -383,12 +383,37 @@
        edges for the peek to sit flush against the right one. The inset the
        padding used to provide moves onto the header and the track itself. */
     .fpb {
-      padding: 80px 0;
+      padding: 64px 0;
     }
 
+    /* The header was taking a large share of the section's height before the
+       first cover appeared: desktop's gaps between eyebrow, heading and
+       subtitle are generous at this width, and the subtitle's 1.8 line-height
+       runs to three lines on a phone. Tightening those, and the gap down to
+       the track, hands the vertical room back to the covers.
+
+       The 20px inset matches the track's padding-inline, so the heading's left
+       edge lines up with the first cover's rather than sitting 4px inside it. */
     .fpb__header {
-      margin-bottom: 40px;
-      padding: 0 24px;
+      margin-bottom: 28px;
+      padding: 0 20px;
+    }
+
+    .fpb__eyebrow {
+      margin-bottom: 10px;
+    }
+
+    .fpb__heading {
+      margin-bottom: 12px;
+    }
+
+    .fpb__subtitle {
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .fpb__dots {
+      margin-top: 28px;
     }
 
     /* Swipe is the interaction on touch; the dots still give direct access to
