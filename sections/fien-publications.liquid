@@ -1,15 +1,21 @@
 {%- comment -%}
-  Pages of three. Used for the dots below the carousel, and mirrored in the
-  JS. (n + 2) / 3 with Liquid's integer division is ceil(n / 3).
+  Desktop pages of three. (n + 2) / 3 with Liquid's integer division is
+  ceil(n / 3).
+
+  One dot is rendered per cover rather than per page, because the two
+  breakpoints need different numbers of them — desktop pages three covers at a
+  time, mobile moves one at a time. The JS hides whichever dots the current
+  breakpoint doesn't need; they start hidden at the desktop count so the
+  desktop row is already correct on first paint.
 {%- endcomment -%}
 {%- liquid
-  assign page_count = section.blocks.size | plus: 2 | divided_by: 3
+  assign desktop_page_count = section.blocks.size | plus: 2 | divided_by: 3
 -%}
 
 <section
   class="fpb"
   id="fien-publications"
-  style="--fpb-gap: {{ section.settings.gap }}px; --fpb-ratio: {{ section.settings.cover_ratio }}; --fpb-scale: {{ section.settings.cover_scale | default: 86 }}%;"
+  style="--fpb-gap: {{ section.settings.gap }}px; --fpb-ratio: {{ section.settings.cover_ratio }}; --fpb-scale: {{ section.settings.cover_scale | default: 86 }}%; --fpb-mobile-cover: {{ section.settings.mobile_cover_width | default: 82 }}vw;"
 >
   {%- comment -%} Section header — matches .ffc__header and .fpg__header {%- endcomment -%}
   <div class="fpb__header">
@@ -72,13 +78,19 @@
               {% endif %}
             >
               {%- if block.settings.image != blank -%}
+                {%- comment -%}
+                  Mobile shows one cover at roughly 82vw against desktop's
+                  28vw, so sizes has to branch at the same breakpoint as the
+                  CSS — left at 28vw, phones would fetch an image a third of
+                  the width they display it at.
+                {%- endcomment -%}
                 {{
                   block.settings.image
                   | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
                     widths: '300, 400, 600, 800, 1000, 1200',
-                    sizes: '28vw',
+                    sizes: '(max-width: 749px) 82vw, 28vw',
                     class: 'fpb__image'
                 }}
               {%- else -%}
@@ -111,9 +123,9 @@
       </button>
     </div>
 
-    {%- if page_count > 1 -%}
+    {%- if section.blocks.size > 1 -%}
       <div class="fpb__dots" role="tablist" aria-label="{{ 'sections.fien_publications.dots_label' | t }}">
-        {%- for i in (1..page_count) -%}
+        {%- for block in section.blocks -%}
           <button
             class="fpb__dot{% if forloop.first %} fpb__dot--active{% endif %}"
             type="button"
@@ -125,6 +137,7 @@
             {% else %}
               aria-selected="false"
             {% endif %}
+            {% if forloop.index0 >= desktop_page_count %}hidden{% endif %}
           ></button>
         {%- endfor -%}
       </div>
@@ -350,38 +363,78 @@
     background: var(--gold);
   }
 
+  /* Hidden by the JS — the dots this breakpoint doesn't need, and the whole row
+     when everything fits in a single page. Both stated explicitly because the
+     UA stylesheet's [hidden] rule loses to the display declarations above. */
+  .fpb__dot[hidden],
+  .fpb__dots[hidden] {
+    display: none;
+  }
+
+  /* ── Mobile: edge-to-edge peek carousel ────────────────────────────────────
+     Three covers across a phone left each one about 57px wide, which is
+     unreadable for a magazine cover. Mobile instead shows a single large cover
+     with the next one breaking the right edge, so the peek is what signals
+     there is more to swipe — the arrows are dropped rather than shrunk,
+     because at this size they cost more width than they earn.
+     ───────────────────────────────────────────────────────────────────────── */
   @media screen and (max-width: 749px) {
-    /* Tighter section padding, and the arrows pull in so the three covers
-       keep as much width as possible on a phone. */
+    /* No horizontal padding on the section: the track has to reach both screen
+       edges for the peek to sit flush against the right one. The inset the
+       padding used to provide moves onto the header and the track itself. */
     .fpb {
-      padding: 80px 16px;
+      padding: 80px 0;
     }
 
     .fpb__header {
-      margin-bottom: 48px;
-      padding: 0 8px;
+      margin-bottom: 40px;
+      padding: 0 24px;
     }
 
+    /* Swipe is the interaction on touch; the dots still give direct access to
+       any cover, so nothing is only reachable by the arrows. */
     .fpb__arrow {
-      width: 40px;
-      height: 40px;
-      margin: 0 4px;
+      display: none;
     }
 
-    /* Covers are roughly a third of the screen here, so the credit lines
-       scale down with them to stop every title wrapping. */
+    /* padding-inline insets the first and last cover so neither is jammed
+       against a screen edge, while scroll-padding-inline moves the snap line
+       in by the same amount — without it the snapped cover would align to the
+       viewport edge and sit under the inset instead of inside it. */
+    .fpb__track {
+      gap: 12px;
+      padding-inline: 20px;
+      scroll-padding-inline: 20px;
+    }
+
+    /* The cover width is a share of the viewport rather than of the track, so
+       whatever is left over after one cover plus the gap becomes the peek. */
+    .fpb__item {
+      flex: 0 0 var(--fpb-mobile-cover);
+    }
+
+    /* Covers fill their slot here. The desktop cover-size setting exists to
+       tune the spacing of the 3-up row, which no longer applies with a single
+       cover in view — applying it would only shrink the covers again. */
+    .fpb__cover,
     .fpb__meta {
-      margin-top: 10px;
+      width: 100%;
     }
 
+    .fpb__meta {
+      margin-top: 14px;
+    }
+
+    /* The covers are large now, so the credit lines no longer need shrinking
+       to stop every title wrapping. */
     .fpb__title {
-      font-size: 9px;
-      letter-spacing: 0.12em;
+      font-size: 11px;
+      letter-spacing: 0.18em;
     }
 
     .fpb__issue {
-      font-size: 12px;
-      margin-top: 4px;
+      font-size: 14px;
+      margin-top: 5px;
     }
 
     /* No hover on touch, so the lift only fires on tap and reads as a glitch. */
@@ -392,15 +445,19 @@
 {% endstylesheet %}
 
 {% javascript %}
-  // Publications carousel — pages of three.
+  // Publications carousel.
   //
   // Scrolling is native (scroll-snap), so this only wires the arrows and dots
   // to it and mirrors the scroll position back into their state. Nothing here
   // drives the scroll position on its own, which is what keeps swipe on touch
   // and the arrows on desktop from fighting each other.
+  //
+  // How many covers make up a page is measured from the layout rather than
+  // fixed, because the breakpoints disagree: desktop pages three at a time,
+  // mobile advances one large cover at a time. Everything below derives from
+  // that measurement, so one code path serves both and neither number is
+  // written down here where it could drift from the CSS.
   (function () {
-    var PER_PAGE = 3;
-
     function initPublications(carousel) {
       if (!carousel || carousel.dataset.fpbReady === 'true') return;
 
@@ -410,11 +467,10 @@
       var next = carousel.querySelector('.fpb__arrow--next');
       var section = carousel.closest('.fpb');
       var dots = section ? section.querySelectorAll('.fpb__dot') : [];
+      var dotsRow = section ? section.querySelector('.fpb__dots') : null;
 
       if (!track || items.length === 0) return;
       carousel.dataset.fpbReady = 'true';
-
-      var pageCount = Math.ceil(items.length / PER_PAGE);
 
       // One cover plus one gutter. Measured rather than computed from the
       // settings so it stays correct at any viewport width, and re-measured
@@ -426,32 +482,56 @@
         return b - a;
       }
 
+      // Covers in view, from the track's own width — three on desktop, one on
+      // mobile, without either number being stated here. Rounding rather than
+      // flooring is what lands the mobile case on 1: the peeked cover is a
+      // fraction of a stride, so 1.17 strides of track is one cover in view.
+      function perPage() {
+        var step = stride();
+        if (step <= 0) return 1;
+        return Math.max(1, Math.round(track.clientWidth / step));
+      }
+
+      function pageCount() {
+        return Math.max(1, Math.ceil(items.length / perPage()));
+      }
+
       function currentPage() {
-        var pageWidth = stride() * PER_PAGE;
+        var pageWidth = stride() * perPage();
         if (pageWidth <= 0) return 0;
         var page = Math.round(track.scrollLeft / pageWidth);
-        return Math.max(0, Math.min(pageCount - 1, page));
+        return Math.max(0, Math.min(pageCount() - 1, page));
       }
 
       function goToPage(page) {
-        var clamped = Math.max(0, Math.min(pageCount - 1, page));
-        track.scrollTo({ left: clamped * stride() * PER_PAGE, behavior: 'smooth' });
+        var clamped = Math.max(0, Math.min(pageCount() - 1, page));
+        track.scrollTo({ left: clamped * stride() * perPage(), behavior: 'smooth' });
       }
 
       function sync() {
+        var pages = pageCount();
         var page = currentPage();
 
-        // Compared against the real scroll extent, not the page index, so the
-        // final page being short of three covers still disables the arrow.
+        // Compared against the real scroll extent, not the page index, so a
+        // final page short of a full set of covers still disables the arrow.
         var maxScroll = track.scrollWidth - track.clientWidth;
         if (prev) prev.disabled = track.scrollLeft <= 1;
         if (next) next.disabled = track.scrollLeft >= maxScroll - 1;
 
+        // There is a dot per cover in the markup, but only the first `pages` of
+        // them mean anything at this breakpoint — the rest are hidden rather
+        // than left pointing at pages that don't exist.
         for (var i = 0; i < dots.length; i++) {
-          var active = i === page;
+          var inRange = i < pages;
+          var active = inRange && i === page;
+          dots[i].hidden = !inRange;
           dots[i].classList.toggle('fpb__dot--active', active);
           dots[i].setAttribute('aria-selected', active ? 'true' : 'false');
         }
+
+        // Everything fits in one page at this width, so there is nothing to
+        // page between.
+        if (dotsRow) dotsRow.hidden = pages < 2;
       }
 
       if (prev) {
@@ -535,7 +615,7 @@
       "type": "range",
       "id": "gap",
       "label": "Space between covers",
-      "info": "Three covers are always in view, on desktop and mobile alike.",
+      "info": "Applies on desktop and tablet, where three covers are in view. Phones show one cover at a time with a fixed gap.",
       "min": 8,
       "max": 64,
       "step": 4,
@@ -546,12 +626,23 @@
       "type": "range",
       "id": "cover_scale",
       "label": "Cover size",
-      "info": "How much of its slot each cover fills. Lower values make the covers smaller without changing how many are in view.",
+      "info": "Desktop and tablet only. How much of its slot each cover fills — lower values make the covers smaller without changing how many are in view.",
       "min": 60,
       "max": 100,
       "step": 2,
       "unit": "%",
       "default": 86
+    },
+    {
+      "type": "range",
+      "id": "mobile_cover_width",
+      "label": "Mobile cover width",
+      "info": "Phones only. How much of the screen width one cover fills. Whatever is left over becomes the peek of the next cover at the right edge, which is what shows there is more to swipe.",
+      "min": 70,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 82
     },
     {
       "type": "select",
