@@ -142,26 +142,146 @@
     "fien_photo_collage": {
       "type": "fien-photo-collage",
       "blocks": {
-        "photo_pAgHtC": {
+        "photo_RBrkHw": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/7H5A7349.jpg",
+            "image": "shopify://shop_images/7H5A1053_c8ac8558-97ce-4a6d-a45f-9be787044e49.jpg",
             "feature": false,
             "caption": ""
           }
         },
-        "photo_RwE9EV": {
+        "photo_iMfW6p": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/C93I1197-4.jpg",
+            "image": "shopify://shop_images/7H5A9170.jpg",
             "feature": false,
             "caption": ""
           }
         },
-        "photo_gD69DU": {
+        "photo_xU4LzG": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/7H5A5526.jpg",
+            "image": "shopify://shop_images/557A4837_copy_9eb5ecb2-5535-4288-aa11-90e80548e470.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_E7chLa": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A3458.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_GPFxbd": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A9160-2.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_GW6yQi": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A9787-2.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_M9RFTG": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/DJI_0328.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_h7GU86": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A5508.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_WgwRkd": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A1542-2_copy.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_V6aRD3": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A2996.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_7cnxja": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A2606.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_WgPNDJ": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A2518_copy.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_QMcejq": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/DJI_0562.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_JP9RMA": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A8312.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_zhbWEt": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A6106.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_rjX4wW": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/pointoview.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_9dVGEQ": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A3592-Enhanced-NR-2.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_YfG7Gz": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/BB6A5365.jpg",
             "feature": false,
             "caption": ""
           }
@@ -169,7 +289,7 @@
         "photo_2": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/7H5A0970_copy.jpg",
+            "image": "shopify://shop_images/WVC_9326-Enhanced-NR.jpg",
             "feature": false,
             "caption": ""
           }
@@ -190,10 +310,26 @@
             "caption": ""
           }
         },
+        "photo_RwE9EV": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/557A6648_copy_preview.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
         "photo_5": {
           "type": "photo",
           "settings": {
             "image": "shopify://shop_images/7H5A8539.jpg",
+            "feature": false,
+            "caption": ""
+          }
+        },
+        "photo_pAgHtC": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/7H5A7349.jpg",
             "feature": false,
             "caption": ""
           }
@@ -232,13 +368,30 @@
         }
       },
       "block_order": [
-        "photo_pAgHtC",
-        "photo_RwE9EV",
-        "photo_gD69DU",
+        "photo_RBrkHw",
+        "photo_iMfW6p",
+        "photo_xU4LzG",
+        "photo_E7chLa",
+        "photo_GPFxbd",
+        "photo_GW6yQi",
+        "photo_M9RFTG",
+        "photo_h7GU86",
+        "photo_WgwRkd",
+        "photo_V6aRD3",
+        "photo_7cnxja",
+        "photo_WgPNDJ",
+        "photo_QMcejq",
+        "photo_JP9RMA",
+        "photo_zhbWEt",
+        "photo_rjX4wW",
+        "photo_9dVGEQ",
+        "photo_YfG7Gz",
         "photo_2",
         "photo_3",
         "photo_4",
+        "photo_RwE9EV",
         "photo_5",
+        "photo_pAgHtC",
         "photo_6",
         "photo_bRgQCd",
         "photo_7",
@@ -246,7 +399,7 @@
       ],
       "settings": {
         "eyebrow": "The collection",
-        "heading": "STill Photography",
+        "heading": "ARTIST SELECTS",
         "subtitle": ""
       }
     },
