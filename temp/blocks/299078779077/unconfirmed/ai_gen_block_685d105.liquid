@@ -1,6 +1,84 @@
+{% doc %}
+  @prompt
+    Add a CSS-only mobile override that increases the size of publication photo/cover blocks by approximately 50% on mobile screens (max-width 749px), without affecting the desktop layout. Target the publications section's cover image elements specifically.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-publication-mobile-override-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .article-template__hero-container img,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .article-template__hero-small img,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .article__grid-image-wrapper img,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .blog-articles__article img,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .card__media img,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .featured-blog img {
+      transform: scale({{ block.settings.mobile_scale_factor }});
+      transform-origin: center;
+    }
+
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .article-template__hero-container,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .article-template__hero-small,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .article__grid-image-wrapper,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .blog-articles__article,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .card__media,
+    .ai-publication-mobile-override-{{ ai_gen_id }} ~ * .featured-blog {
+      overflow: {{ block.settings.overflow_behavior }};
+    }
+  }
+{% endstyle %}
+
+<div class="ai-publication-mobile-override-{{ ai_gen_id }}" {{ block.shopify_attributes }}></div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Publication mobile scale",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mobile image scaling"
+    },
+    {
+      "type": "paragraph",
+      "content": "Increases publication cover images on mobile screens (max-width 749px). Place this block at the top of your template."
+    },
+    {
+      "type": "range",
+      "id": "mobile_scale_factor",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "label": "Mobile scale factor",
+      "default": 1.5,
+      "info": "1.5 = 50% larger, 2.0 = 100% larger"
+    },
+    {
+      "type": "select",
+      "id": "overflow_behavior",
+      "label": "Overflow behavior",
+      "options": [
+        {
+          "value": "hidden",
+          "label": "Hidden (crop scaled image)"
+        },
+        {
+          "value": "visible",
+          "label": "Visible (show full scaled image)"
+        }
+      ],
+      "default": "hidden",
+      "info": "Controls whether scaled images are cropped or expand their containers"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Publication mobile scale"
+    }
+  ]
+}
 {% endschema %}
