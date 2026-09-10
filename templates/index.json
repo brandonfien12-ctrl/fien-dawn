@@ -180,6 +180,7 @@
         "subtitle": "Covers shot for magazines and journals in the field.",
         "gap": 8,
         "cover_scale": 100,
+        "mobile_cover_width": 80,
         "cover_ratio": "3 / 4"
       }
     },
@@ -462,9 +463,9 @@
   },
   "order": [
     "fien_hero",
+    "fien_anniversary_banner",
     "fien_featured_films",
     "fien_publications",
-    "fien_photo_collage",
-    "fien_anniversary_banner"
+    "fien_photo_collage"
   ]
 }
