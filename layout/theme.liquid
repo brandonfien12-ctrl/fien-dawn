@@ -106,9 +106,11 @@
       }
 
       /* Site is dark-only end to end — never let Dawn's default light
-         scheme show through on short pages (e.g. Contact). */
+         scheme (or the .gradient class base.css puts on <body>, which
+         outranks a plain `body` selector) show through on short pages
+         (e.g. Contact). */
       body {
-        background-color: #080808;
+        background-color: #080808 !important;
       }
 
       :root {
