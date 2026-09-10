@@ -105,6 +105,12 @@
         background-color: rgb(var(--color-background));
       }
 
+      /* Site is dark-only end to end — never let Dawn's default light
+         scheme show through on short pages (e.g. Contact). */
+      body {
+        background-color: #080808;
+      }
+
       :root {
         --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
         --font-body-style: {{ settings.type_body_font.style }};
