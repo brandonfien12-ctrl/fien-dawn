@@ -43,6 +43,13 @@
             "title": "ARGENTINA"
           }
         },
+        "film_Xh7tLe": {
+          "type": "film",
+          "settings": {
+            "video": "shopify://files/videos/moonhorizontal.mp4",
+            "title": "THE MOON"
+          }
+        },
         "film_fbaWdE": {
           "type": "film",
           "settings": {
@@ -55,6 +62,7 @@
       "block_order": [
         "film_1",
         "film_3",
+        "film_Xh7tLe",
         "film_fbaWdE"
       ],
       "settings": {
