@@ -35,37 +35,9 @@
 
     <div class="fien-hero__cta">
       {%- if section.settings.portfolio_label != blank -%}
-        {%- comment -%}
-          Anchors down to the sections on THIS page (#fien-films, #fien-photography)
-          rather than the separate /pages/videography and /pages/photography —
-          the site's global `scroll-behavior: smooth` (layout/theme.liquid) makes
-          this glide rather than jump.
-        {%- endcomment -%}
-        {%- liquid
-          assign hero_cta1_url = section.settings.cta1_url | default: '#fien-films'
-          assign hero_cta2_url = section.settings.cta2_url | default: '#fien-photography'
-        -%}
-        <div class="fien-hero__dropdown" data-fien-dropdown>
-          <button
-            type="button"
-            class="fien-btn fien-btn--primary fien-hero__dropdown-toggle"
-            aria-haspopup="true"
-            aria-expanded="false"
-            data-fien-dropdown-toggle
-          >
-            {{- section.settings.portfolio_label -}}
-            <span class="fien-hero__caret" aria-hidden="true"></span>
-          </button>
-          <ul class="fien-hero__submenu" role="list">
-            {% render 'fien-portfolio-links',
-              item_class: 'fien-hero__submenu-link',
-              l1_label: section.settings.cta1_label,
-              l1_url: hero_cta1_url,
-              l2_label: section.settings.cta2_label,
-              l2_url: hero_cta2_url
-            %}
-          </ul>
-        </div>
+        <a href="/pages/contact" class="fien-btn fien-btn--primary">
+          {{- section.settings.portfolio_label -}}
+        </a>
       {%- endif -%}
 
     </div>
@@ -450,37 +422,14 @@
     },
     {
       "type": "header",
-      "content": "Portfolio dropdown"
+      "content": "Call-to-action button"
     },
     {
       "type": "text",
       "id": "portfolio_label",
-      "label": "Dropdown button label",
-      "default": "View the portfolio"
-    },
-    {
-      "type": "text",
-      "id": "cta1_label",
-      "label": "Link 1 label",
-      "default": "Films"
-    },
-    {
-      "type": "url",
-      "id": "cta1_url",
-      "label": "Link 1 URL",
-      "info": "Defaults to #fien-films (scrolls down to the Films section on this page) if left blank"
-    },
-    {
-      "type": "text",
-      "id": "cta2_label",
-      "label": "Link 2 label",
-      "default": "Photography"
-    },
-    {
-      "type": "url",
-      "id": "cta2_url",
-      "label": "Link 2 URL",
-      "info": "Defaults to #fien-photography (scrolls down to the Photography section on this page) if left blank"
+      "label": "Button label",
+      "info": "Links to the Contact page",
+      "default": "Contact for booking"
     },
     {
       "type": "video",
