@@ -17,6 +17,10 @@
           <span class="fab__line">{{- section.settings.heading_line_2 -}}</span>
         </h2>
 
+        {%- if section.settings.subtitle != blank -%}
+          <p class="fab__subtitle">{{- section.settings.subtitle -}}</p>
+        {%- endif -%}
+
         {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
           <a
             href="{{ section.settings.cta_url }}"
@@ -133,8 +137,9 @@
     padding: 14px 40px;
     border: 1px solid #c9a84c;
     border: 1px solid var(--gold);
-    color: #c9a84c;
-    color: var(--gold);
+    background: #c9a84c;
+    background: var(--gold);
+    color: #080808;
     font-family: 'Montserrat', sans-serif;
     font-family: var(--font-sans);
     font-size: 10px;
@@ -142,13 +147,15 @@
     letter-spacing: 0.3em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
   }
 
   .fab__cta:hover {
-    background: #c9a84c;
-    background: var(--gold);
-    color: #080808;
+    background: #e8c97a;
+    background: var(--gold-light);
+    border-color: #e8c97a;
+    border-color: var(--gold-light);
+    transform: translateY(-2px);
   }
 
   /* ── Mobile ───────────────────────────────────────────────────────────── */
