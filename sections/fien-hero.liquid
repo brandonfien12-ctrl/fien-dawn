@@ -29,8 +29,9 @@
       <span>{{- section.settings.heading_line_2 -}}</span>
     </h1>
 
-    <p class="fien-hero__subtitle">
-      {{- section.settings.subtitle -}}
+    <p class="fien-hero__tagline">
+      <span class="fien-hero__tagline-gold">{{- section.settings.tagline_gold -}}</span>
+      <span class="fien-hero__tagline-light">{{- section.settings.tagline_light -}}</span>
     </p>
 
     <div class="fien-hero__cta">
@@ -130,17 +131,23 @@
     display: block;
   }
 
-  .fien-hero__subtitle {
-    font-family: var(--font-serif);
-    font-size: clamp(16px, 2vw, 22px);
-    font-style: italic;
-    font-weight: 300;
-    color: var(--muted);
+  .fien-hero__tagline {
     margin: 24px 0 0;
-    max-width: 500px;
-    line-height: 1.7;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-size: clamp(12px, 1.4vw, 16px);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
     opacity: 0;
     animation: fienFadeUp 0.9s 0.7s forwards;
+  }
+
+  .fien-hero__tagline-gold {
+    color: var(--gold);
+  }
+
+  .fien-hero__tagline-light {
+    color: var(--white);
   }
 
   .fien-hero__cta {
@@ -415,10 +422,17 @@
       "default": "Stories."
     },
     {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "They say a picture is worth a thousand words — but what if the most powerful ones were never spoken at all?"
+      "type": "text",
+      "id": "tagline_gold",
+      "label": "Tagline — gold word(s)",
+      "info": "Styled like the business card tagline",
+      "default": "Elevate"
+    },
+    {
+      "type": "text",
+      "id": "tagline_light",
+      "label": "Tagline — light word(s)",
+      "default": "Your Brand"
     },
     {
       "type": "header",
