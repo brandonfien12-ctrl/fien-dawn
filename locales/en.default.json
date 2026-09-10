@@ -345,6 +345,7 @@
       "label_email": "Email",
       "label_subject": "Subject",
       "label_message": "Message",
+      "subject_booking": "Booking inquiry",
       "subject_print": "Print inquiry",
       "subject_commission": "Commission",
       "subject_general": "General",
